@@ -124,7 +124,7 @@ public class RotatingCircleView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Log.e("SSSSS", energyPercent + "");
+//        Log.e("SSSSS", energyPercent + "");
         bitmapRect.left = bitmapRect.left - maxDistance;
         bitmapRect.top = bitmapRect.top - maxDistance;
         bitmapRect.right = bitmapRect.right + maxDistance;
