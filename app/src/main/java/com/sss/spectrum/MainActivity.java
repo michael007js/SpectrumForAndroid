@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.hjq.permissions.OnPermission;
 import com.hjq.permissions.XXPermissions;
 import com.sss.view.ColumnarView;
+import com.sss.view.GridPointView;
 import com.sss.view.RotatingCircleView;
 import com.sss.view.AiVoiceView;
 import com.sss.view.WaveformView;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private WaveformView waveform;
     private RotatingCircleView rotatingCircle;
     private AiVoiceView aiVoice;
+    private GridPointView gridPointView;
 
     private Visualizer.OnDataCaptureListener dataCaptureListener = new Visualizer.OnDataCaptureListener() {
         @Override
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 waveform.setWaveData(newData);
                 rotatingCircle.setWaveData(newData);
                 aiVoice.setWaveData(newData);
+                gridPointView.setWaveData(newData);
                 time = System.currentTimeMillis();
             }
         }
@@ -56,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
         columnar = findViewById(R.id.columnar);
         waveform = findViewById(R.id.waveform);
         rotatingCircle = findViewById(R.id.rotatingCircle);
-        aiVoice=findViewById(R.id.aiVoice);
+        aiVoice = findViewById(R.id.aiVoice);
+        gridPointView = findViewById(R.id.gridPointView);
         XXPermissions.with(this)
                 .permission("android.permission.RECORD_AUDIO")
                 .request(new OnPermission() {

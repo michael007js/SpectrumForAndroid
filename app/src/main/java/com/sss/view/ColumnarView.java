@@ -62,7 +62,7 @@ public class ColumnarView extends View {
             for (int i = 0; i < blockData.size(); i++) {
                 blockData.get(i).left = newData.get(i).left;
                 blockData.get(i).right = newData.get(i).right;
-                Log.e("SSSSS", newData.get(i).top + "---" + blockData.get(i).top);
+//                Log.e("SSSSS", newData.get(i).top + "---" + blockData.get(i).top);
                 if (newData.get(i).top < blockData.get(i).top) {
                     blockData.get(i).top = newData.get(i).top - blockHeight - distance;
                 } else {
