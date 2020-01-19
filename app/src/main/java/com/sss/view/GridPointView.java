@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -38,11 +37,11 @@ public class GridPointView extends View {
         this(context, null);
     }
 
-    public GridPointView(Context context, @Nullable AttributeSet attrs) {
+    public GridPointView(Context context,  AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public GridPointView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public GridPointView(Context context,  AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -56,7 +55,7 @@ public class GridPointView extends View {
         for (int i = 0; i < data.length; i++) {
             energy += Math.abs(data[i]);
         }
-        Log.e("SSSSS",energy+"");
+//        Log.e("SSSSS",energy+"");
         showList.clear();
         int a= (int) ((1 - energy / (data.length * 127))*100);
         for (int i = 0; i < a; i++) {

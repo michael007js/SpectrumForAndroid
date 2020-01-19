@@ -11,6 +11,7 @@ import com.sss.view.ColumnarView;
 import com.sss.view.GridPointView;
 import com.sss.view.RotatingCircleView;
 import com.sss.view.AiVoiceView;
+import com.sss.view.SpeedometerView;
 import com.sss.view.WaveformView;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private RotatingCircleView rotatingCircle;
     private AiVoiceView aiVoice;
     private GridPointView gridPointView;
+    private SpeedometerView speedometerView;
 
     private Visualizer.OnDataCaptureListener dataCaptureListener = new Visualizer.OnDataCaptureListener() {
         @Override
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 rotatingCircle.setWaveData(newData);
                 aiVoice.setWaveData(newData);
                 gridPointView.setWaveData(newData);
+                speedometerView.setWaveData(newData);
                 time = System.currentTimeMillis();
             }
         }
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         rotatingCircle = findViewById(R.id.rotatingCircle);
         aiVoice = findViewById(R.id.aiVoice);
         gridPointView = findViewById(R.id.gridPointView);
+        speedometerView=findViewById(R.id.speedometerView);
         XXPermissions.with(this)
                 .permission("android.permission.RECORD_AUDIO")
                 .request(new OnPermission() {
