@@ -82,13 +82,12 @@ public class ColumnarView extends View {
             } else {
                 rect.left = newData.get(newData.size() - 1).right + spacing;
             }
-            rect.top = getHeight() - (Math.abs(127 - data[i])) * lagerOffset;
+            rect.top = getHeight() - data[i] * lagerOffset;
             rect.right = rect.left + width;
             rect.bottom = getHeight();
             newData.add(rect);
         }
 
-        invalidate();
     }
 
 
@@ -101,5 +100,6 @@ public class ColumnarView extends View {
         for (int i = 0; i < blockData.size(); i++) {
             canvas.drawRect(blockData.get(i), paint);
         }
+        invalidate();
     }
 }

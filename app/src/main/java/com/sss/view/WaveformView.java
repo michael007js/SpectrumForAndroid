@@ -45,6 +45,7 @@ public class WaveformView extends View {
 
 
     public void setWaveData(byte[] data) {
+        paint.setStrokeWidth(3);
         spacing = getWidth() / AppConstant.LUMP_COUNT;
         defultY = getHeight() / 2;
         newData.clear();
@@ -52,10 +53,9 @@ public class WaveformView extends View {
             if (i == 0 || i == i - 1) {
                 newData.add(new Point(0, defultY));
             } else {
-                newData.add(new Point(spacing * i, defultY + getOffsetY(i, 127 - data[i])));
+                newData.add(new Point(spacing * i, defultY + getOffsetY(i, data[i])));
             }
         }
-        invalidate();
     }
 
     private int getOffsetY(int i, int data) {
@@ -75,5 +75,6 @@ public class WaveformView extends View {
                 canvas.drawLine(newData.get(i - 1).x, newData.get(i - 1).y, newData.get(i).x, newData.get(i).y, paint);
             }
         }
+        invalidate();
     }
 }

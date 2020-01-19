@@ -57,8 +57,7 @@ public class GridPointView extends View {
         }
 //        Log.e("SSSSS",energy+"");
         showList.clear();
-        int a= (int) ((1 - energy / (data.length * 127))*100);
-        for (int i = 0; i < a; i++) {
+        for (int i = 0; i < energy/100; i++) {
             showList.add(rectList.get(random.nextInt(rectList.size() - 1)));
         }
         invalidate();

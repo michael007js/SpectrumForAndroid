@@ -35,20 +35,17 @@
             android:layout_width="match_parent"
             android:layout_height="150dp" />
 
-        <com.sss.view.GridPointView
-            android:id="@+id/gridPointView"
-            android:layout_marginTop="10dp"
-            android:layout_width="250dp"
-            android:layout_height="250dp" />
-
-
-
         <com.sss.view.RotatingCircleView
             android:id="@+id/rotatingCircle"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="150dp" />
 
+        <com.sss.view.GridPointView
+            android:id="@+id/gridPointView"
+            android:layout_marginTop="10dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp" />
 
 
     </LinearLayout>

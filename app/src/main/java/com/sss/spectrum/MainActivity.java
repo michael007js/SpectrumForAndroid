@@ -27,15 +27,38 @@ public class MainActivity extends AppCompatActivity {
     private AiVoiceView aiVoice;
     private GridPointView gridPointView;
     private SpeedometerView speedometerView;
-
+    boolean mDataEn = true;
+    protected byte[] mData = new byte[AppConstant.LUMP_COUNT];//音量柱 数组
     private Visualizer.OnDataCaptureListener dataCaptureListener = new Visualizer.OnDataCaptureListener() {
+
+
         @Override
         public void onWaveFormDataCapture(Visualizer visualizer, final byte[] data, int samplingRate) {
+//            if (System.currentTimeMillis() - time > 1000 / AppConstant.FPS) {
+//                byte[] newData = new byte[AppConstant.LUMP_COUNT];
+//                byte abs;
+//                for (int i = 0; i < AppConstant.LUMP_COUNT; i++) {
+//                    abs = (byte) Math.abs(data[i]);
+//                    //Math.abs -128时越界
+//                    newData[i] = abs < 0 ? 127 : abs;
+//                }
+//                columnar.setWaveData(newData);
+//                waveform.setWaveData(newData);
+//                rotatingCircle.setWaveData(newData);
+//                aiVoice.setWaveData(newData);
+//                gridPointView.setWaveData(newData);
+//                speedometerView.setWaveData(newData);
+//                time = System.currentTimeMillis();
+//            }
+        }
+
+        @Override
+        public void onFftDataCapture(Visualizer visualizer, final byte[] fft, int samplingRate) {
             if (System.currentTimeMillis() - time > 1000 / AppConstant.FPS) {
                 byte[] newData = new byte[AppConstant.LUMP_COUNT];
                 byte abs;
                 for (int i = 0; i < AppConstant.LUMP_COUNT; i++) {
-                    abs = (byte) Math.abs(data[i]);
+                    abs = (byte) Math.abs(fft[i]);
                     //Math.abs -128时越界
                     newData[i] = abs < 0 ? 127 : abs;
                 }
@@ -49,11 +72,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        @Override
-        public void onFftDataCapture(Visualizer visualizer, final byte[] fft, int samplingRate) {
-//            Log.e("SSSSS fft", fft.length + "");
-        }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         rotatingCircle = findViewById(R.id.rotatingCircle);
         aiVoice = findViewById(R.id.aiVoice);
         gridPointView = findViewById(R.id.gridPointView);
-        speedometerView=findViewById(R.id.speedometerView);
+        speedometerView = findViewById(R.id.speedometerView);
         XXPermissions.with(this)
                 .permission("android.permission.RECORD_AUDIO")
                 .request(new OnPermission() {
@@ -105,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         int captureRate = Visualizer.getMaxCaptureRate() * 3 / 4;
 
         visualizer.setCaptureSize(captureSize);
-        visualizer.setDataCaptureListener(dataCaptureListener, captureRate, true, true);
+        visualizer.setDataCaptureListener(dataCaptureListener, captureRate, false, true);
         visualizer.setScalingMode(Visualizer.SCALING_MODE_NORMALIZED);
         visualizer.setEnabled(true);
     }
