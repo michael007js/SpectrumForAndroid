@@ -4,7 +4,7 @@ No picture u say a j8!
 
 少啰嗦，先看效果
 
-![闭嘴看图](https://github.com/michael007js/SpectrumForAndroid/blob/master/app/gif/ScreenRecord.gif "闭嘴看图")
+![闭嘴看图](https://github.com/michael007js/SpectrumForAndroid/blob/master/app/gif/ScreenRecord1.gif "闭嘴看图")
 
  因录屏问题，看上去很卡，但实际非常流畅，并且可实时调整FPS， [详情请查看此文件](https://github.com/michael007js/SpectrumForAndroid/blob/master/app/src/main/java/com/sss/spectrum/AppConstant.java)
 
