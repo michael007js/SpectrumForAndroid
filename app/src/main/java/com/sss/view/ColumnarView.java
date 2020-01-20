@@ -2,6 +2,7 @@ package com.sss.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -48,7 +49,7 @@ public class ColumnarView extends View {
 
     public void setWaveData(byte[] data) {
         width = getWidth() / AppConstant.LUMP_COUNT;
-
+        paint.setColor(AppConstant.COLOR);
         if (newData.size() > 0) {
             if (blockData.size() == 0 || newData.size() != blockData.size()) {
                 blockData.clear();

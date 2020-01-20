@@ -86,7 +86,7 @@ public class SpeedometerView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         paint.setStrokeWidth(10);
-        paint.setColor(Color.rgb(0, 0, 0));
+        paint.setColor(AppConstant.COLOR);
         calcPoint();
         canvas.drawArc(rectF, 0, 360, false, paint);
         paint.setColor(Color.rgb(red, green, blue));

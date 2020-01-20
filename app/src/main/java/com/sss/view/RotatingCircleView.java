@@ -116,8 +116,8 @@ public class RotatingCircleView extends View {
             bitmapRect.top = centerY - 100;
             bitmapRect.right = centerX + 100;
             bitmapRect.bottom = centerY + 100;
-            invalidate();
         }
+        invalidate();
     }
 
 

@@ -4,9 +4,11 @@ import android.media.MediaPlayer;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.hjq.permissions.OnPermission;
 import com.hjq.permissions.XXPermissions;
+import com.sss.view.CircleRoundView;
 import com.sss.view.ColumnarView;
 import com.sss.view.GridPointView;
 import com.sss.view.RotatingCircleView;
@@ -27,8 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private AiVoiceView aiVoice;
     private GridPointView gridPointView;
     private SpeedometerView speedometerView;
-    boolean mDataEn = true;
-    protected byte[] mData = new byte[AppConstant.LUMP_COUNT];//音量柱 数组
+    private CircleRoundView circleRoundView;
     private Visualizer.OnDataCaptureListener dataCaptureListener = new Visualizer.OnDataCaptureListener() {
 
 
@@ -54,22 +55,25 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onFftDataCapture(Visualizer visualizer, final byte[] fft, int samplingRate) {
-            if (System.currentTimeMillis() - time > 1000 / AppConstant.FPS) {
-                byte[] newData = new byte[AppConstant.LUMP_COUNT];
-                byte abs;
-                for (int i = 0; i < AppConstant.LUMP_COUNT; i++) {
-                    abs = (byte) Math.abs(fft[i]);
-                    //Math.abs -128时越界
-                    newData[i] = abs < 0 ? 127 : abs;
-                }
-                columnar.setWaveData(newData);
-                waveform.setWaveData(newData);
-                rotatingCircle.setWaveData(newData);
-                aiVoice.setWaveData(newData);
-                gridPointView.setWaveData(newData);
-                speedometerView.setWaveData(newData);
-                time = System.currentTimeMillis();
+//            Log.e("SSSSS", System.currentTimeMillis() - time + "---" + (2000 / AppConstant.FPS));
+            if (System.currentTimeMillis() - time < 2000 / AppConstant.FPS) {
+                return;
             }
+            byte[] newData = new byte[AppConstant.LUMP_COUNT];
+            byte abs;
+            for (int i = 0; i < AppConstant.LUMP_COUNT; i++) {
+                abs = (byte) Math.abs(fft[i]);
+                //Math.abs -128时越界
+                newData[i] = abs < 0 ? 127 : abs;
+            }
+            columnar.setWaveData(newData);
+            waveform.setWaveData(newData);
+            rotatingCircle.setWaveData(newData);
+            aiVoice.setWaveData(newData);
+            gridPointView.setWaveData(newData);
+            speedometerView.setWaveData(newData);
+            circleRoundView.setWaveData(newData);
+            time = System.currentTimeMillis();
         }
 
     };
@@ -85,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         aiVoice = findViewById(R.id.aiVoice);
         gridPointView = findViewById(R.id.gridPointView);
         speedometerView = findViewById(R.id.speedometerView);
+        circleRoundView = findViewById(R.id.circleRoundView);
         XXPermissions.with(this)
                 .permission("android.permission.RECORD_AUDIO")
                 .request(new OnPermission() {

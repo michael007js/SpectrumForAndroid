@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000"
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical">
 
         <com.sss.view.ColumnarView
@@ -19,33 +20,41 @@
 
         <com.sss.view.WaveformView
             android:id="@+id/waveform"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="150dp" />
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp" />
 
         <com.sss.view.AiVoiceView
             android:id="@+id/aiVoice"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="150dp" />
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+           />
+
+        <com.sss.view.CircleRoundView
+            android:id="@+id/circleRoundView"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_marginTop="10dp"
+           />
 
         <com.sss.view.SpeedometerView
             android:id="@+id/speedometerView"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="150dp" />
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp" />
 
         <com.sss.view.RotatingCircleView
             android:id="@+id/rotatingCircle"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="150dp" />
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp" />
 
         <com.sss.view.GridPointView
             android:id="@+id/gridPointView"
-            android:layout_marginTop="10dp"
             android:layout_width="250dp"
-            android:layout_height="250dp" />
+            android:layout_height="250dp"
+            android:layout_marginTop="10dp" />
 
 
     </LinearLayout>

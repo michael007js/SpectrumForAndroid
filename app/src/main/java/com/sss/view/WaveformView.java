@@ -2,6 +2,7 @@ package com.sss.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
@@ -46,6 +47,7 @@ public class WaveformView extends View {
 
     public void setWaveData(byte[] data) {
         paint.setStrokeWidth(3);
+        paint.setColor(AppConstant.COLOR);
         spacing = getWidth() / AppConstant.LUMP_COUNT;
         defultY = getHeight() / 2;
         newData.clear();

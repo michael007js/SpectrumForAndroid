@@ -9,6 +9,7 @@ import android.graphics.Path;
 import android.util.TypedValue;
 
 import java.lang.ref.WeakReference;
+import java.util.Random;
 
 public class Utils {
     /**
@@ -25,7 +26,9 @@ public class Utils {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spVal, Resources.getSystem().getDisplayMetrics());
     }
 
-
+    public static int randomInt(Random random, int min, int max) {
+        return random.nextInt(max) % (max - min + 1) + min;
+    }
 
     public static Bitmap getScaleBitmap(int r, int res, Resources resources) {
         BitmapFactory.Options opts = new BitmapFactory.Options();

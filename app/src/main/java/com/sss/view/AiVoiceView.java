@@ -23,7 +23,7 @@ public class AiVoiceView extends View {
     //初始Y轴
     private int defultY;
     //放大量
-    private int lagerOffset=3;
+    private int lagerOffset = 3;
 
     private Paint paint = new Paint();
 
@@ -99,9 +99,9 @@ public class AiVoiceView extends View {
         int index = (int) (data.length * (bean.end + bean.start) / 2);
 //        Log.e("SSSSS", index + "");
         if (index < data.length) {
-            return (Math.abs(Math.abs(data[index]) ) - 2)*lagerOffset;
+            return (Math.abs(Math.abs(data[index])) - 2) * lagerOffset;
         } else {
-            return (Math.abs(Math.abs(data[data.length - 1]) ) + 2)*lagerOffset;
+            return (Math.abs(Math.abs(data[data.length - 1])) + 2) * lagerOffset;
         }
     }
 

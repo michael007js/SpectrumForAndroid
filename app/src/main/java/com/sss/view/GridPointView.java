@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.sss.spectrum.AppConstant;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -92,12 +94,12 @@ public class GridPointView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.BLACK);
+        paint.setColor(AppConstant.COLOR);
         for (int i = 0; i < rectList.size(); i++) {
             canvas.drawRect(rectList.get(i), paint);
         }
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.RED);
+        paint.setColor(AppConstant.COLOR);
         for (int i = 0; i < showList.size(); i++) {
             canvas.drawRect(showList.get(i), paint);
         }
