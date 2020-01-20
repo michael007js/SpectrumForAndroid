@@ -1,13 +1,14 @@
 package com.sss.spectrum;
 
+import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.hjq.permissions.OnPermission;
 import com.hjq.permissions.XXPermissions;
+import com.sss.view.BesselView;
 import com.sss.view.CircleRoundView;
 import com.sss.view.ColumnarView;
 import com.sss.view.GridPointView;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private GridPointView gridPointView;
     private SpeedometerView speedometerView;
     private CircleRoundView circleRoundView;
+    private BesselView besselView;
     private Visualizer.OnDataCaptureListener dataCaptureListener = new Visualizer.OnDataCaptureListener() {
 
 
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
             gridPointView.setWaveData(newData);
             speedometerView.setWaveData(newData);
             circleRoundView.setWaveData(newData);
+            besselView.setWaveData(newData);
             time = System.currentTimeMillis();
         }
 
@@ -81,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         columnar = findViewById(R.id.columnar);
@@ -90,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         gridPointView = findViewById(R.id.gridPointView);
         speedometerView = findViewById(R.id.speedometerView);
         circleRoundView = findViewById(R.id.circleRoundView);
+        besselView = findViewById(R.id.besselView);
         XXPermissions.with(this)
                 .permission("android.permission.RECORD_AUDIO")
                 .request(new OnPermission() {

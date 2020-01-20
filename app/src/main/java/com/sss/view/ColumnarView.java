@@ -3,8 +3,10 @@ package com.sss.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -22,8 +24,6 @@ public class ColumnarView extends View {
     private int width;
     //每一个能量柱之间的间距
     private int spacing = 5;
-    //放大量
-    private int lagerOffset = 2;
     //能量块高度
     private int blockHeight = 5;
     //能量块下将速度
@@ -49,7 +49,7 @@ public class ColumnarView extends View {
 
     public void setWaveData(byte[] data) {
         width = getWidth() / AppConstant.LUMP_COUNT;
-        paint.setColor(AppConstant.COLOR);
+//        paint.setColor(AppConstant.COLOR);
         if (newData.size() > 0) {
             if (blockData.size() == 0 || newData.size() != blockData.size()) {
                 blockData.clear();
@@ -83,7 +83,7 @@ public class ColumnarView extends View {
             } else {
                 rect.left = newData.get(newData.size() - 1).right + spacing;
             }
-            rect.top = getHeight() - data[i] * lagerOffset;
+            rect.top = getHeight() - data[i] * AppConstant.LAGER_PFFSET;
             rect.right = rect.left + width;
             rect.bottom = getHeight();
             newData.add(rect);
@@ -91,6 +91,11 @@ public class ColumnarView extends View {
 
     }
 
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        paint.setShader(new LinearGradient(0f, 0f, getWidth(), getHeight(), new int[]{0xffff0000, 0xff00ff00, 0xff0000ff}, new float[]{0, 0.5f, 1f}, Shader.TileMode.CLAMP));
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {

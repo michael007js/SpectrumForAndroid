@@ -2,11 +2,8 @@ package com.sss.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -21,11 +18,8 @@ import java.util.List;
 public class WaveformView extends View {
     //初始波形Y轴
     private int defultY;
-    //每一个立柱的宽度
-    private int width;
-    //每一个立柱之间的间距
+    //每一个波形点之间的间距
     private int spacing = 5;
-
 
     private Paint paint = new Paint();
 
@@ -62,9 +56,9 @@ public class WaveformView extends View {
 
     private int getOffsetY(int i, int data) {
         if (i % 2 == 0) {
-            return data;
+            return data * AppConstant.LAGER_PFFSET;
         } else {
-            return -data;
+            return -data * AppConstant.LAGER_PFFSET;
         }
     }
 
@@ -73,7 +67,7 @@ public class WaveformView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         for (int i = 0; i < newData.size(); i++) {
-            if (i > 1 ) {
+            if (i > 1) {
                 canvas.drawLine(newData.get(i - 1).x, newData.get(i - 1).y, newData.get(i).x, newData.get(i).y, paint);
             }
         }

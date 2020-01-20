@@ -18,11 +18,12 @@
             android:layout_width="match_parent"
             android:layout_height="150dp" />
 
-        <com.sss.view.WaveformView
-            android:id="@+id/waveform"
+        <com.sss.view.BesselView
+            android:id="@+id/besselView"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            />
 
         <com.sss.view.AiVoiceView
             android:id="@+id/aiVoice"
@@ -30,6 +31,12 @@
             android:layout_height="100dp"
             android:layout_marginTop="10dp"
            />
+
+        <com.sss.view.WaveformView
+            android:id="@+id/waveform"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp" />
 
         <com.sss.view.CircleRoundView
             android:id="@+id/circleRoundView"
