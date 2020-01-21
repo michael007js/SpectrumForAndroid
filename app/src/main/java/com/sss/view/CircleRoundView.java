@@ -69,9 +69,9 @@ public class CircleRoundView extends View {
         if (energy > energyEnable) {
             CircleRoundViewBean circleRoundViewBean = new CircleRoundViewBean();
             circleRoundViewBean.radius = (int) (minRadius + energy / 1000);
-            circleRoundViewBean.red = Utils.randomInt(random, (int) (255 * (energy / 10000f)), 255);
-            circleRoundViewBean.green = Utils.randomInt(random, (int) (255 * (energy / 10000f)), 255);
-            circleRoundViewBean.blue = Utils.randomInt(random, (int) (255 * (energy / 10000f)), 255);
+            circleRoundViewBean.red = Utils.randomInt(random, (int) (AppConstant.RED * (energy / 10000f)), AppConstant.RED);
+            circleRoundViewBean.green = Utils.randomInt(random, (int) (AppConstant.GREEN * (energy / 10000f)), AppConstant.GREEN);
+            circleRoundViewBean.blue = Utils.randomInt(random, (int) (AppConstant.BLUE * (energy / 10000f)), AppConstant.BLUE );
             list.add(circleRoundViewBean);
         }
     }
@@ -97,9 +97,9 @@ public class CircleRoundView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        red = Utils.randomInt(random, (int) (255 * (energy / 10000f)), 255);
-        green = Utils.randomInt(random, (int) (255 * (energy / 10000f)), 255);
-        blue = Utils.randomInt(random, (int) (255 * (energy / 10000f)), 255);
+        red = Utils.randomInt(random, (int) (AppConstant.RED * (energy / 10000f)), AppConstant.RED);
+        green = Utils.randomInt(random, (int) (AppConstant.GREEN * (energy / 10000f)), AppConstant.GREEN);
+        blue = Utils.randomInt(random, (int) (AppConstant.BLUE  * (energy / 10000f)), AppConstant.BLUE );
         for (int i = 0; i < list.size(); i++) {
             rectF.left = centerX - list.get(i).radius;
             rectF.right = centerX + list.get(i).radius;
@@ -113,8 +113,8 @@ public class CircleRoundView extends View {
     }
 
     private int getAlpha(int i, CircleRoundViewBean circleRoundViewBean) {
-        return circleRoundViewBean.radius > 50 ? 255 - i * transparencyFallOffValue : 255;
-//        return i < list.size() - transparencyFallOffTrigger ? 255 - i * transparencyFallOffValue : 255;
+        return circleRoundViewBean.radius > 50 ? AppConstant.ALPHA - i * transparencyFallOffValue : AppConstant.ALPHA;
+//        return i < list.size() - transparencyFallOffTrigger ? AppConstant.ALPHA  - i * transparencyFallOffValue : AppConstant.ALPHA;
     }
 
     private void spread() {

@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.sss.Utils;
 import com.sss.spectrum.AppConstant;
 
 /**
@@ -17,7 +18,7 @@ import com.sss.spectrum.AppConstant;
  */
 public class SpeedometerView extends View {
     //半径
-    private int radiu;
+    private int radius;
     //圆心点
     private int centerX, centerY;
     //表盘区域
@@ -25,7 +26,7 @@ public class SpeedometerView extends View {
     //正在绘制的圆弧上的点坐标
     private Point point = new Point();
     //角度
-    private double angle;
+    private float angle;
     //圆弧点与圆边距离
     private int distance = 50;
     //色值 红
@@ -73,7 +74,7 @@ public class SpeedometerView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        radiu = h;
+        radius = h;
         centerX = w / 2;
         centerY = h;
         rectF.left = centerX - h;
@@ -87,7 +88,7 @@ public class SpeedometerView extends View {
         super.onDraw(canvas);
         paint.setStrokeWidth(10);
         paint.setColor(AppConstant.COLOR);
-        calcPoint();
+        Utils.calcPoint(centerX, centerY, radius - distance, angle + 180, point);
         canvas.drawArc(rectF, 0, 360, false, paint);
         paint.setColor(Color.rgb(red, green, blue));
         canvas.drawLine(centerX, centerY, point.x, point.y, paint);
@@ -95,9 +96,9 @@ public class SpeedometerView extends View {
     }
 
 
-    private void calcPoint() {
-        point.x = (int) (centerX + (radiu - distance) * Math.cos((angle + 180) * Math.PI / 180));
-        point.y = (int) (centerY + (radiu - distance) * Math.sin((angle + 180) * Math.PI / 180));
-    }
+//    private void calcPoint() {
+//        point.x = (int) (centerX + (radiu - distance) * Math.cos((angle + 180) * Math.PI / 180));
+//        point.y = (int) (centerY + (radiu - distance) * Math.sin((angle + 180) * Math.PI / 180));
+//    }
 
 }

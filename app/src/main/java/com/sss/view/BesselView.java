@@ -67,7 +67,7 @@ public class BesselView extends View {
                 point.y = (int) (getHeight() + getHeight() / 1.3);
             } else {
                 point.x = list.get(list.size() - 1).x + spacing;
-                point.y = (int) (getHeight() + getHeight() / 1.3 - data[i] * AppConstant.LAGER_PFFSET * 1.5);
+                point.y = (int) (getHeight() + getHeight() / 1.3 - data[i] * AppConstant.LAGER_OFFSET * 1.5);
             }
             list.add(point);
         }

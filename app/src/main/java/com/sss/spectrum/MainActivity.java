@@ -12,6 +12,7 @@ import com.sss.view.BesselView;
 import com.sss.view.CircleRoundView;
 import com.sss.view.ColumnarView;
 import com.sss.view.GridPointView;
+import com.sss.view.HexagramView;
 import com.sss.view.RotatingCircleView;
 import com.sss.view.AiVoiceView;
 import com.sss.view.SpeedometerView;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private SpeedometerView speedometerView;
     private CircleRoundView circleRoundView;
     private BesselView besselView;
+    private HexagramView hexagramView;
     private Visualizer.OnDataCaptureListener dataCaptureListener = new Visualizer.OnDataCaptureListener() {
 
 
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             speedometerView.setWaveData(newData);
             circleRoundView.setWaveData(newData);
             besselView.setWaveData(newData);
+            hexagramView.setWaveData(newData);
             time = System.currentTimeMillis();
         }
 
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         columnar = findViewById(R.id.columnar);
@@ -95,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         speedometerView = findViewById(R.id.speedometerView);
         circleRoundView = findViewById(R.id.circleRoundView);
         besselView = findViewById(R.id.besselView);
+        hexagramView=findViewById(R.id.hexagramView);
         XXPermissions.with(this)
                 .permission("android.permission.RECORD_AUDIO")
                 .request(new OnPermission() {

@@ -40,11 +40,6 @@ public class RotatingCircleView extends View {
     private int radius = Utils.dp2px(100);
 
     private final float maxDistance = Utils.dp2px(25);
-    private final float alpha = 255;
-    private final float red = 255;
-    private final float green = 255;
-    private final float blue = 255;
-
 
     private Bitmap bitmap;
     private Matrix matrix = new Matrix();
@@ -109,7 +104,7 @@ public class RotatingCircleView extends View {
             for (int i = 0; i < data.length; i++) {
                 energy += Math.abs(data[i]);
             }
-            energyPercent = energy/10000f;
+            energyPercent = energy / 10000f;
 //            Log.e("SSSSS",energyPercent+"");
 
             bitmapRect.left = centerX - 100;
@@ -129,9 +124,9 @@ public class RotatingCircleView extends View {
         bitmapRect.top = bitmapRect.top - maxDistance;
         bitmapRect.right = bitmapRect.right + maxDistance;
         bitmapRect.bottom = bitmapRect.bottom + maxDistance;
-        paint.setColor(Color.argb(alpha * energyPercent, 100+red * energyPercent, 120+green * energyPercent, 150+blue * energyPercent));
+        paint.setColor(Color.argb(AppConstant.ALPHA * energyPercent, 100 + AppConstant.RED * energyPercent, 120 + AppConstant.GREEN * energyPercent, 150 + AppConstant.BLUE * energyPercent));
         canvas.drawArc(bitmapRect, 0, 360, false, paint);
-        paint.setAlpha(255);
+        paint.setAlpha(AppConstant.ALPHA);
         canvas.rotate(degress, centerX, centerY);
         canvas.translate(centerX - radius / 2, centerY - radius / 2);
         canvas.drawBitmap(bitmap, matrix, paint);

@@ -50,19 +50,19 @@ public class AiVoiceView extends View {
         paint.setAntiAlias(true);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.LIGHTEN));
         AiVoiceViewBean red = new AiVoiceViewBean();
-        red.color = Color.argb(255, 255, 0, 0);
+        red.color = Color.argb(AppConstant.ALPHA, AppConstant.RED, 0, 0);
         red.start = 0f;
         red.end = 0.8f;
         attribute.add(red);
         paths.add(new Path());
         AiVoiceViewBean green = new AiVoiceViewBean();
-        green.color = Color.argb(255, 0, 255, 0);
+        green.color = Color.argb(AppConstant.ALPHA, 0, AppConstant.GREEN, 0);
         green.start = 0.1f;
         green.end = 0.9f;
         attribute.add(green);
         paths.add(new Path());
         AiVoiceViewBean blue = new AiVoiceViewBean();
-        blue.color = Color.argb(255, 0, 0, 255);
+        blue.color = Color.argb(AppConstant.ALPHA, 0, 0, AppConstant.BLUE);
         blue.start = 0.2f;
         blue.end = 1.0f;
         attribute.add(blue);
@@ -98,9 +98,9 @@ public class AiVoiceView extends View {
         int index = (int) (data.length * (bean.end + bean.start) / 2);
 //        Log.e("SSSSS", index + "");
         if (index < data.length) {
-            return (Math.abs(Math.abs(data[index])) - 2) * AppConstant.LAGER_PFFSET;
+            return (Math.abs(Math.abs(data[index])) - 2) * AppConstant.LAGER_OFFSET;
         } else {
-            return (Math.abs(Math.abs(data[data.length - 1])) + 2) * AppConstant.LAGER_PFFSET;
+            return (Math.abs(Math.abs(data[data.length - 1])) + 2) * AppConstant.LAGER_OFFSET;
         }
     }
 

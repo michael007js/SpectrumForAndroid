@@ -6,12 +6,34 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.util.TypedValue;
 
 import java.lang.ref.WeakReference;
 import java.util.Random;
 
 public class Utils {
+
+    /**
+     * 将以3点钟方向的角度系转换成以12点钟方向的角度系
+     */
+    public static float getAngle(float angle) {
+        if (angle < 90) {
+            return 270 + 30 + 90 - angle;
+        } else {
+            return angle - 90;
+        }
+    }
+
+    /**
+     * 计算圆弧上的某一点
+     */
+    public static Point calcPoint(int centerX, int centerY, int radius, float angle, Point point) {
+        point.x = (int) (centerX + radius * Math.cos((angle) * Math.PI / 180));
+        point.y = (int) (centerY + radius * Math.sin((angle) * Math.PI / 180));
+        return point;
+    }
+
     /**
      * dp转px
      */
@@ -54,7 +76,7 @@ public class Utils {
     /**
      * 获取圆形bitmap
      */
-    public static Bitmap getCirleBitmap(int r,Bitmap bmp,Paint paint) {
+    public static Bitmap getCirleBitmap(int r, Bitmap bmp, Paint paint) {
         WeakReference<Bitmap> weak = new WeakReference<>(Bitmap.createBitmap(r, r, Bitmap.Config.ARGB_8888));
         Canvas canvas = new Canvas(weak.get());
         Path path = new Path();

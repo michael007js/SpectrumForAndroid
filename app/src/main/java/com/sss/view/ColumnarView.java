@@ -83,7 +83,7 @@ public class ColumnarView extends View {
             } else {
                 rect.left = newData.get(newData.size() - 1).right + spacing;
             }
-            rect.top = getHeight() - data[i] * AppConstant.LAGER_PFFSET;
+            rect.top = getHeight() - data[i] * AppConstant.LAGER_OFFSET;
             rect.right = rect.left + width;
             rect.bottom = getHeight();
             newData.add(rect);

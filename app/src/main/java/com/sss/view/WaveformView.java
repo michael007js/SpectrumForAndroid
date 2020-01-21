@@ -56,9 +56,9 @@ public class WaveformView extends View {
 
     private int getOffsetY(int i, int data) {
         if (i % 2 == 0) {
-            return data * AppConstant.LAGER_PFFSET;
+            return data * AppConstant.LAGER_OFFSET;
         } else {
-            return -data * AppConstant.LAGER_PFFSET;
+            return -data * AppConstant.LAGER_OFFSET;
         }
     }
 
