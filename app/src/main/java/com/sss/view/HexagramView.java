@@ -99,7 +99,7 @@ public class HexagramView extends View {
             energy += Math.abs(data[i]);
         }
         Log.e("SSSSS", energy + "");
-        calcHexagramPoint(innerPoints, (int) (radiusInner * energy / 10000), energy);
+        calcHexagramPoint(innerPoints, (int) (radiusInner * energy / (AppConstant.isFFT ? 10000 : 100000)), energy);
         invalidate();
     }
 
@@ -126,10 +126,10 @@ public class HexagramView extends View {
         }
         if (list==outterPoints){
             paint.setColor(Color.argb(
-                    Utils.randomInt(random, (int) (AppConstant.RED * (energy / 10000f)), AppConstant.ALPHA),
-                    Utils.randomInt(random, (int) (AppConstant.RED * (energy / 10000f)), AppConstant.RED),
-                    Utils.randomInt(random, (int) (AppConstant.RED * (energy / 10000f)), AppConstant.GREEN),
-                    Utils.randomInt(random, (int) (AppConstant.RED * (energy / 10000f)), AppConstant.BLUE)
+                    Utils.randomInt(random, (int) (AppConstant.RED * (energy /  (AppConstant.isFFT ? 10000 : 100000))), AppConstant.ALPHA),
+                    Utils.randomInt(random, (int) (AppConstant.RED * (energy /  (AppConstant.isFFT ? 10000 : 100000))), AppConstant.RED),
+                    Utils.randomInt(random, (int) (AppConstant.RED * (energy /  (AppConstant.isFFT ? 10000 : 100000))), AppConstant.GREEN),
+                    Utils.randomInt(random, (int) (AppConstant.RED * (energy /  (AppConstant.isFFT ? 10000 : 100000))), AppConstant.BLUE)
                     )
             );
         }else {

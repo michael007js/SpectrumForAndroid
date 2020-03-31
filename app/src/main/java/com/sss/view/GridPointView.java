@@ -45,11 +45,11 @@ public class GridPointView extends View {
         this(context, null);
     }
 
-    public GridPointView(Context context,  AttributeSet attrs) {
+    public GridPointView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public GridPointView(Context context,  AttributeSet attrs, int defStyleAttr) {
+    public GridPointView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -59,7 +59,7 @@ public class GridPointView extends View {
     }
 
     public void setWaveData(byte[] data) {
-        if (!enable){
+        if (!enable) {
             return;
         }
         float energy = 0f;
@@ -68,7 +68,7 @@ public class GridPointView extends View {
         }
 //        Log.e("SSSSS",energy+"");
         showList.clear();
-        for (int i = 0; i < energy/100; i++) {
+        for (int i = 0; i < energy / (AppConstant.isFFT ? 100 : 1000); i++) {
             showList.add(rectList.get(random.nextInt(rectList.size() - 1)));
         }
         invalidate();

@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
@@ -16,13 +17,14 @@ import com.sss.view.GridPointView;
 import com.sss.view.HexagramView;
 import com.sss.view.RotatingCircleView;
 import com.sss.view.AiVoiceView;
+import com.sss.view.SiriView;
 import com.sss.view.SpeedometerView;
 import com.sss.view.WaveformView;
 import com.sss.view.SlipBallView;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener{
+public class MainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
     private Visualizer visualizer;
     private MediaPlayer player;
     private long time;
@@ -37,58 +39,54 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
     private BesselView besselView;
     private HexagramView hexagramView;
     private SlipBallView slipBallView;
+    private SiriView siriView;
 
     private Visualizer.OnDataCaptureListener dataCaptureListener = new Visualizer.OnDataCaptureListener() {
 
 
         @Override
-        public void onWaveFormDataCapture(Visualizer visualizer, final byte[] data, int samplingRate) {
-//            if (System.currentTimeMillis() - time > 1000 / AppConstant.FPS) {
-//                byte[] newData = new byte[AppConstant.LUMP_COUNT];
-//                byte abs;
-//                for (int i = 0; i < AppConstant.LUMP_COUNT; i++) {
-//                    abs = (byte) Math.abs(data[i]);
-//                    //Math.abs -128时越界
-//                    newData[i] = abs < 0 ? 127 : abs;
-//                }
-//                columnar.setWaveData(newData);
-//                waveform.setWaveData(newData);
-//                rotatingCircle.setWaveData(newData);
-//                aiVoice.setWaveData(newData);
-//                gridPointView.setWaveData(newData);
-//                speedometerView.setWaveData(newData);
-//                time = System.currentTimeMillis();
-//            }
+        public void onWaveFormDataCapture(Visualizer visualizer, final byte[] fft, int samplingRate) {
+//            Log.e("SSSSS", System.currentTimeMillis() - time + "---" + (2000 / AppConstant.FPS));
+            if (!AppConstant.isFFT) {
+                dispose(fft);
+            }
         }
 
         @Override
         public void onFftDataCapture(Visualizer visualizer, final byte[] fft, int samplingRate) {
 //            Log.e("SSSSS", System.currentTimeMillis() - time + "---" + (2000 / AppConstant.FPS));
-            if (System.currentTimeMillis() - time < 2000 / AppConstant.FPS) {
-                return;
+            if (AppConstant.isFFT) {
+                dispose(fft);
             }
-            byte[] newData = new byte[AppConstant.LUMP_COUNT];
-            byte abs;
-            for (int i = 0; i < AppConstant.LUMP_COUNT; i++) {
-                abs = (byte) Math.abs(fft[i]);
-                //Math.abs -128时越界
-                newData[i] = abs < 0 ? 127 : abs;
-            }
-            columnar.setWaveData(newData);
-            waveform.setWaveData(newData);
-            rotatingCircle.setWaveData(newData);
-            aiVoice.setWaveData(newData);
-            gridPointView.setWaveData(newData);
-            speedometerView.setWaveData(newData);
-            circleRoundView.setWaveData(newData);
-            besselView.setWaveData(newData);
-            hexagramView.setWaveData(newData);
-            slipBallView.setWaveData(newData);
-            time = System.currentTimeMillis();
         }
 
     };
 
+    private void dispose(byte[] data) {
+        if (System.currentTimeMillis() - time < 2000 / AppConstant.FPS) {
+            return;
+        }
+        byte[] newData = new byte[AppConstant.LUMP_COUNT];
+        byte abs;
+        for (int i = 0; i < AppConstant.LUMP_COUNT; i++) {
+            abs = (byte) Math.abs(data[i]);
+            //Math.abs -128时越界
+            newData[i] = abs < 0 ? AppConstant.LUMP_COUNT : abs;
+        }
+        columnar.setWaveData(newData);
+        waveform.setWaveData(newData);
+        rotatingCircle.setWaveData(newData);
+        aiVoice.setWaveData(newData);
+        gridPointView.setWaveData(newData);
+        speedometerView.setWaveData(newData);
+        circleRoundView.setWaveData(newData);
+        besselView.setWaveData(newData);
+        hexagramView.setWaveData(newData);
+        slipBallView.setWaveData(newData);
+        siriView.setWaveData(newData);
+
+        time = System.currentTimeMillis();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,19 +101,22 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         speedometerView = findViewById(R.id.speedometerView);
         circleRoundView = findViewById(R.id.circleRoundView);
         besselView = findViewById(R.id.besselView);
-        hexagramView=findViewById(R.id.hexagramView);
-        slipBallView=findViewById(R.id.slipBall);
+        hexagramView = findViewById(R.id.hexagramView);
+        slipBallView = findViewById(R.id.slipBall);
+        siriView = findViewById(R.id.siriView);
 
-        ((Switch)findViewById(R.id.switch_slip_ball)).setOnCheckedChangeListener(this);
-        ((Switch)findViewById(R.id.switch_hexagramView)).setOnCheckedChangeListener(this);
-        ((Switch)findViewById(R.id.switch_columnar)).setOnCheckedChangeListener(this);
-        ((Switch)findViewById(R.id.switch_besselView)).setOnCheckedChangeListener(this);
-        ((Switch)findViewById(R.id.switch_aiVoice)).setOnCheckedChangeListener(this);
-        ((Switch)findViewById(R.id.switch_waveform)).setOnCheckedChangeListener(this);
-        ((Switch)findViewById(R.id.switch_circleRoundView)).setOnCheckedChangeListener(this);
-        ((Switch)findViewById(R.id.switch_speedometerView)).setOnCheckedChangeListener(this);
-        ((Switch)findViewById(R.id.switch_rotatingCircle)).setOnCheckedChangeListener(this);
-        ((Switch)findViewById(R.id.switch_gridPointView)).setOnCheckedChangeListener(this);
+        ((Switch) findViewById(R.id.switch_siriView)).setOnCheckedChangeListener(this);
+        ((Switch) findViewById(R.id.switch_slip_ball)).setOnCheckedChangeListener(this);
+        ((Switch) findViewById(R.id.switch_hexagramView)).setOnCheckedChangeListener(this);
+        ((Switch) findViewById(R.id.switch_columnar)).setOnCheckedChangeListener(this);
+        ((Switch) findViewById(R.id.switch_besselView)).setOnCheckedChangeListener(this);
+        ((Switch) findViewById(R.id.switch_aiVoice)).setOnCheckedChangeListener(this);
+        ((Switch) findViewById(R.id.switch_waveform)).setOnCheckedChangeListener(this);
+        ((Switch) findViewById(R.id.switch_circleRoundView)).setOnCheckedChangeListener(this);
+        ((Switch) findViewById(R.id.switch_speedometerView)).setOnCheckedChangeListener(this);
+        ((Switch) findViewById(R.id.switch_rotatingCircle)).setOnCheckedChangeListener(this);
+        ((Switch) findViewById(R.id.switch_gridPointView)).setOnCheckedChangeListener(this);
+        ((Switch) findViewById(R.id.switch_button)).setOnCheckedChangeListener(this);
         XXPermissions.with(this)
                 .permission("android.permission.RECORD_AUDIO")
                 .request(new OnPermission() {
@@ -137,7 +138,10 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        switch (buttonView.getId()){
+        switch (buttonView.getId()) {
+            case R.id.switch_siriView:
+                siriView.setEnable(isChecked);
+                break;
             case R.id.switch_hexagramView:
                 hexagramView.setEnable(isChecked);
                 break;
@@ -168,6 +172,8 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
             case R.id.switch_gridPointView:
                 gridPointView.setEnable(isChecked);
                 break;
+            case R.id.switch_button:
+                AppConstant.isFFT = isChecked;
         }
     }
 
@@ -194,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         int captureRate = Visualizer.getMaxCaptureRate() * 3 / 4;
 
         visualizer.setCaptureSize(captureSize);
-        visualizer.setDataCaptureListener(dataCaptureListener, captureRate, false, true);
+        visualizer.setDataCaptureListener(dataCaptureListener, captureRate, true, true);
         visualizer.setScalingMode(Visualizer.SCALING_MODE_NORMALIZED);
         visualizer.setEnabled(true);
     }

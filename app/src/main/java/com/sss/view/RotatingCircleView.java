@@ -105,7 +105,7 @@ public class RotatingCircleView extends View {
     }
 
     public void setWaveData(byte[] data) {
-        if (!enable){
+        if (!enable) {
             return;
         }
         float energy = 0f;
@@ -113,9 +113,7 @@ public class RotatingCircleView extends View {
             for (int i = 0; i < data.length; i++) {
                 energy += Math.abs(data[i]);
             }
-            energyPercent = energy / 10000f;
-//            Log.e("SSSSS",energyPercent+"");
-
+            energyPercent = energy / (AppConstant.isFFT ? 10000f : 100000f);
             bitmapRect.left = centerX - 100;
             bitmapRect.top = centerY - 100;
             bitmapRect.right = centerX + 100;

@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.sss.bean.SlipBallBean;
+import com.sss.spectrum.AppConstant;
 
 
 /**
@@ -68,18 +69,17 @@ public class SlipBallView extends View {
         slipBallBean.paintOutter.setShader(new RadialGradient(centerX, centerY, radius, Color.YELLOW, Color.RED, Shader.TileMode.CLAMP));
 
 
-
     }
 
     public void setWaveData(byte[] data) {
-        if (!enable){
+        if (!enable) {
             return;
         }
         energy = 0f;
         for (int i = 0; i < data.length; i++) {
             energy += Math.abs(data[i]);
         }
-        slipBallBean.offset= (int) (energy/100);
+        slipBallBean.offset = (int) (energy / (AppConstant.isFFT ? 100 : 1000));
         invalidate();
     }
 
@@ -88,9 +88,9 @@ public class SlipBallView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        slipBallBean.radiusOutter = (int) (radius + Math.sqrt(slipBallBean.offset * slipBallBean.offset * 2));
+        slipBallBean.radiusOutter = (int) (radius + Math.sqrt(slipBallBean.offset * slipBallBean.offset * 3));
         slipBallBean.radiusInner = radius - radius / 2;
-        canvas.drawCircle(centerX, centerY , slipBallBean.radiusOutter, slipBallBean.paintOutter);
+        canvas.drawCircle(centerX, centerY, slipBallBean.radiusOutter, slipBallBean.paintOutter);
         canvas.drawCircle(centerX, centerY, slipBallBean.radiusInner, slipBallBean.paintInner);
 
     }

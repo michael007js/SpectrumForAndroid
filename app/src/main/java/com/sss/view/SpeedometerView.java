@@ -65,16 +65,14 @@ public class SpeedometerView extends View {
 
 
     public void setWaveData(byte[] data) {
-        if (!enable){
+        if (!enable) {
             return;
         }
         float energy = 0f;
         for (int i = 0; i < data.length; i++) {
             energy += Math.abs(data[i]);
         }
-        angle = energy / 10;
-//                angle=data[0];
-//        Log.e("SSSSS",energy+"");
+        angle = energy / (AppConstant.isFFT ? 10 : 100);
         red = data[0] * 2;
         green = data[AppConstant.LUMP_COUNT / 3 * 2] * 2;
         blue = data[AppConstant.LUMP_COUNT - 1] * 2;

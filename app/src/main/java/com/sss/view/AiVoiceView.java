@@ -77,7 +77,7 @@ public class AiVoiceView extends View {
 
 
     public void setWaveData(byte[] data) {
-        if (!enable){
+        if (!enable) {
             return;
         }
         if (attribute.size() != paths.size()) {
@@ -104,11 +104,18 @@ public class AiVoiceView extends View {
 
     private int getEnergyByPoint(AiVoiceViewBean bean, byte[] data) {
         int index = (int) (data.length * (bean.end + bean.start) / 2);
-//        Log.e("SSSSS", index + "");
-        if (index < data.length) {
-            return (Math.abs(Math.abs(data[index])) - 2) * (AppConstant.LAGER_OFFSET);
+        if (AppConstant.isFFT) {
+            if (index < data.length) {
+                return (Math.abs(Math.abs(data[index])) - 2) * (AppConstant.LAGER_OFFSET);
+            } else {
+                return (Math.abs(Math.abs(data[data.length - 1])) + 2) * AppConstant.LAGER_OFFSET;
+            }
         } else {
-            return (Math.abs(Math.abs(data[data.length - 1])) + 2) * AppConstant.LAGER_OFFSET;
+            if (index < data.length) {
+                return (Math.abs(Math.abs(data[index])) - 2);
+            } else {
+                return (Math.abs(Math.abs(data[data.length - 1])) + 2);
+            }
         }
     }
 
