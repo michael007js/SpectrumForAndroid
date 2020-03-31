@@ -30,6 +30,12 @@ public class BesselView extends View {
     private Path path = new Path();
     private List<Point> list = new ArrayList<>();
 
+    private boolean enable;
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
     public BesselView(Context context) {
         super(context);
     }
@@ -58,6 +64,9 @@ public class BesselView extends View {
     }
 
     public void setWaveData(byte[] data) {
+        if (!enable){
+            return;
+        }
         paint.setColor(Color.WHITE);
         list.clear();
         for (int i = 0; i < data.length; i++) {

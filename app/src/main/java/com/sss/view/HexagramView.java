@@ -43,6 +43,12 @@ public class HexagramView extends View {
     private Paint paint = new Paint();
     private Random random = new Random();
 
+    private boolean enable;
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
     public HexagramView(Context context) {
         super(context);
         init();
@@ -85,6 +91,9 @@ public class HexagramView extends View {
 
 
     public void setWaveData(byte[] data) {
+        if (!enable){
+            return;
+        }
         energy = 0f;
         for (int i = 0; i < data.length; i++) {
             energy += Math.abs(data[i]);

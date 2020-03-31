@@ -29,6 +29,11 @@ public class AiVoiceView extends View {
     private List<AiVoiceViewBean> attribute = new ArrayList<>();
     private List<Path> paths = new ArrayList<>();
 
+    private boolean enable;
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
 
     public AiVoiceView(Context context) {
         super(context);
@@ -72,6 +77,9 @@ public class AiVoiceView extends View {
 
 
     public void setWaveData(byte[] data) {
+        if (!enable){
+            return;
+        }
         if (attribute.size() != paths.size()) {
             return;
         }
@@ -98,7 +106,7 @@ public class AiVoiceView extends View {
         int index = (int) (data.length * (bean.end + bean.start) / 2);
 //        Log.e("SSSSS", index + "");
         if (index < data.length) {
-            return (Math.abs(Math.abs(data[index])) - 2) * AppConstant.LAGER_OFFSET;
+            return (Math.abs(Math.abs(data[index])) - 2) * (AppConstant.LAGER_OFFSET);
         } else {
             return (Math.abs(Math.abs(data[data.length - 1])) + 2) * AppConstant.LAGER_OFFSET;
         }

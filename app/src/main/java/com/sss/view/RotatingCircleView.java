@@ -47,6 +47,12 @@ public class RotatingCircleView extends View {
     private RectF bitmapRect = new RectF();
     private ValueAnimator valueAnimator;
 
+    private boolean enable;
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
     public RotatingCircleView(Context context) {
         super(context);
         init();
@@ -99,6 +105,9 @@ public class RotatingCircleView extends View {
     }
 
     public void setWaveData(byte[] data) {
+        if (!enable){
+            return;
+        }
         float energy = 0f;
         if (bitmap != null) {
             for (int i = 0; i < data.length; i++) {

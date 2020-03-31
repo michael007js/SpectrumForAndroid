@@ -1,10 +1,11 @@
 package com.sss.spectrum;
 
-import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import com.hjq.permissions.OnPermission;
 import com.hjq.permissions.XXPermissions;
@@ -17,10 +18,11 @@ import com.sss.view.RotatingCircleView;
 import com.sss.view.AiVoiceView;
 import com.sss.view.SpeedometerView;
 import com.sss.view.WaveformView;
+import com.sss.view.SlipBallView;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener{
     private Visualizer visualizer;
     private MediaPlayer player;
     private long time;
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private CircleRoundView circleRoundView;
     private BesselView besselView;
     private HexagramView hexagramView;
+    private SlipBallView slipBallView;
+
     private Visualizer.OnDataCaptureListener dataCaptureListener = new Visualizer.OnDataCaptureListener() {
 
 
@@ -79,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
             circleRoundView.setWaveData(newData);
             besselView.setWaveData(newData);
             hexagramView.setWaveData(newData);
+            slipBallView.setWaveData(newData);
             time = System.currentTimeMillis();
         }
 
@@ -99,6 +104,18 @@ public class MainActivity extends AppCompatActivity {
         circleRoundView = findViewById(R.id.circleRoundView);
         besselView = findViewById(R.id.besselView);
         hexagramView=findViewById(R.id.hexagramView);
+        slipBallView=findViewById(R.id.slipBall);
+
+        ((Switch)findViewById(R.id.switch_slip_ball)).setOnCheckedChangeListener(this);
+        ((Switch)findViewById(R.id.switch_hexagramView)).setOnCheckedChangeListener(this);
+        ((Switch)findViewById(R.id.switch_columnar)).setOnCheckedChangeListener(this);
+        ((Switch)findViewById(R.id.switch_besselView)).setOnCheckedChangeListener(this);
+        ((Switch)findViewById(R.id.switch_aiVoice)).setOnCheckedChangeListener(this);
+        ((Switch)findViewById(R.id.switch_waveform)).setOnCheckedChangeListener(this);
+        ((Switch)findViewById(R.id.switch_circleRoundView)).setOnCheckedChangeListener(this);
+        ((Switch)findViewById(R.id.switch_speedometerView)).setOnCheckedChangeListener(this);
+        ((Switch)findViewById(R.id.switch_rotatingCircle)).setOnCheckedChangeListener(this);
+        ((Switch)findViewById(R.id.switch_gridPointView)).setOnCheckedChangeListener(this);
         XXPermissions.with(this)
                 .permission("android.permission.RECORD_AUDIO")
                 .request(new OnPermission() {
@@ -114,6 +131,44 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+
+
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        switch (buttonView.getId()){
+            case R.id.switch_hexagramView:
+                hexagramView.setEnable(isChecked);
+                break;
+            case R.id.switch_slip_ball:
+                slipBallView.setEnable(isChecked);
+                break;
+            case R.id.switch_columnar:
+                columnar.setEnable(isChecked);
+                break;
+            case R.id.switch_besselView:
+                besselView.setEnable(isChecked);
+                break;
+            case R.id.switch_aiVoice:
+                aiVoice.setEnable(isChecked);
+                break;
+            case R.id.switch_waveform:
+                waveform.setEnable(isChecked);
+                break;
+            case R.id.switch_circleRoundView:
+                circleRoundView.setEnable(isChecked);
+                break;
+            case R.id.switch_speedometerView:
+                speedometerView.setEnable(isChecked);
+                break;
+            case R.id.switch_rotatingCircle:
+                rotatingCircle.setEnable(isChecked);
+                break;
+            case R.id.switch_gridPointView:
+                gridPointView.setEnable(isChecked);
+                break;
+        }
     }
 
     private void play() {

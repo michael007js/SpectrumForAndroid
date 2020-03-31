@@ -35,6 +35,12 @@ public class ColumnarView extends View {
     private List<Rect> newData = new ArrayList<>();
     private List<Rect> blockData = new ArrayList<>();
 
+    private boolean enable;
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
     public ColumnarView(Context context) {
         super(context);
     }
@@ -48,6 +54,9 @@ public class ColumnarView extends View {
     }
 
     public void setWaveData(byte[] data) {
+        if (!enable){
+            return;
+        }
         width = getWidth() / AppConstant.LUMP_COUNT;
 //        paint.setColor(AppConstant.COLOR);
         if (newData.size() > 0) {

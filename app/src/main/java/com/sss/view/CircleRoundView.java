@@ -43,6 +43,12 @@ public class CircleRoundView extends View {
     private Random random = new Random();
     private Paint paint = new Paint();
 
+    private boolean enable;
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
     public CircleRoundView(Context context) {
         super(context);
         init();
@@ -60,6 +66,9 @@ public class CircleRoundView extends View {
 
 
     public void setWaveData(byte[] data) {
+        if (!enable){
+            return;
+        }
         spread();
         energy = 0f;
         for (int i = 0; i < data.length; i++) {

@@ -13,23 +13,63 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <Switch
+            android:id="@+id/switch_slip_ball"
+            android:textColor="@color/colorAccent"
+            android:text="伸缩球"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.sss.view.SlipBallView
+            android:layout_marginTop="10dp"
+            android:id="@+id/slipBall"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+
+        <Switch
+            android:id="@+id/switch_hexagramView"
+            android:textColor="@color/colorAccent"
+            android:text="六芒星"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <com.sss.view.HexagramView
             android:layout_marginTop="10dp"
             android:id="@+id/hexagramView"
             android:layout_width="match_parent"
             android:layout_height="150dp" />
 
+        <Switch
+            android:id="@+id/switch_columnar"
+            android:textColor="@color/colorAccent"
+            android:text="柱状"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <com.sss.view.ColumnarView
             android:id="@+id/columnar"
             android:layout_width="match_parent"
             android:layout_height="150dp" />
 
+        <Switch
+            android:id="@+id/switch_besselView"
+            android:textColor="@color/colorAccent"
+            android:text="贝塞尔"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <com.sss.view.BesselView
             android:id="@+id/besselView"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_marginTop="10dp"
-            />
+            android:layout_marginTop="10dp" />
+
+        <Switch
+            android:id="@+id/switch_aiVoice"
+            android:textColor="@color/colorAccent"
+            android:text="仿AI语音"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <com.sss.view.AiVoiceView
             android:id="@+id/aiVoice"
@@ -38,11 +78,27 @@
             android:layout_marginTop="10dp"
            />
 
+
+        <Switch
+            android:id="@+id/switch_waveform"
+            android:textColor="@color/colorAccent"
+            android:text="声波"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <com.sss.view.WaveformView
             android:id="@+id/waveform"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginTop="10dp" />
+
+
+        <Switch
+            android:id="@+id/switch_circleRoundView"
+            android:textColor="@color/colorAccent"
+            android:text="水波扩散"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <com.sss.view.CircleRoundView
             android:id="@+id/circleRoundView"
@@ -51,17 +107,38 @@
             android:layout_marginTop="10dp"
            />
 
+        <Switch
+            android:id="@+id/switch_speedometerView"
+            android:textColor="@color/colorAccent"
+            android:text="里程表"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <com.sss.view.SpeedometerView
             android:id="@+id/speedometerView"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginTop="10dp" />
 
+        <Switch
+            android:id="@+id/switch_rotatingCircle"
+            android:textColor="@color/colorAccent"
+            android:text="旋转头像"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <com.sss.view.RotatingCircleView
             android:id="@+id/rotatingCircle"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginTop="10dp" />
+
+        <Switch
+            android:id="@+id/switch_gridPointView"
+            android:textColor="@color/colorAccent"
+            android:text="随机棋盘"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <com.sss.view.GridPointView
             android:id="@+id/gridPointView"

@@ -34,6 +34,12 @@ public class GridPointView extends View {
     private Paint paint = new Paint();
     private Random random = new Random();
 
+    private boolean enable;
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
 
     public GridPointView(Context context) {
         this(context, null);
@@ -53,6 +59,9 @@ public class GridPointView extends View {
     }
 
     public void setWaveData(byte[] data) {
+        if (!enable){
+            return;
+        }
         float energy = 0f;
         for (int i = 0; i < data.length; i++) {
             energy += Math.abs(data[i]);

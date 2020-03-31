@@ -37,6 +37,12 @@ public class SpeedometerView extends View {
     private int blue = 0;
     private Paint paint = new Paint();
 
+    private boolean enable;
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
     public SpeedometerView(Context context) {
         super(context);
         init();
@@ -59,6 +65,9 @@ public class SpeedometerView extends View {
 
 
     public void setWaveData(byte[] data) {
+        if (!enable){
+            return;
+        }
         float energy = 0f;
         for (int i = 0; i < data.length; i++) {
             energy += Math.abs(data[i]);

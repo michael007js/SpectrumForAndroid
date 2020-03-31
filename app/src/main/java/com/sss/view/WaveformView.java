@@ -25,6 +25,12 @@ public class WaveformView extends View {
 
     private List<Point> newData = new ArrayList<>();
 
+    private boolean enable;
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
 
     public WaveformView(Context context) {
         super(context);
@@ -40,6 +46,9 @@ public class WaveformView extends View {
 
 
     public void setWaveData(byte[] data) {
+        if (!enable){
+            return;
+        }
         paint.setStrokeWidth(3);
         paint.setColor(AppConstant.COLOR);
         spacing = getWidth() / AppConstant.LUMP_COUNT;
