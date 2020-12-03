@@ -62,11 +62,11 @@ public class HorizontalEnergyView extends View {
         }
         float energy = 0f;
         for (int i = 0; i < data.length; i++) {
-            energy += Math.abs(data[i]);
+            energy += data[i];
         }
         energy = energy / (AppConstant.isFFT ? 10 : 100);
 
-//        Log.e("SSSSS", energy + "");
+        Log.e("SSSSS", energy + "");
         int total = (int) (energy / 10);
         for (int i = 0; i < list.size(); i++) {
             list.get(i).enable = i < total;

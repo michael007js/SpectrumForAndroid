@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.sss.Utils;
@@ -72,7 +71,7 @@ public class CircleRoundView extends View {
 
         energy = 0f;
         for (int i = 0; i < data.length; i++) {
-            energy += Math.abs(data[i]);
+            energy += data[i];
         }
 //        Log.e("SSSSS", energy + "");
         if (energy > energyEnable) {

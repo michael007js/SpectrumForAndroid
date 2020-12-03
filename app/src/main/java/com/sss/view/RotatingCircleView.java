@@ -3,29 +3,19 @@ package com.sss.view;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import com.sss.Utils;
 import com.sss.spectrum.AppConstant;
 import com.sss.spectrum.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 动感の圆
@@ -112,7 +102,7 @@ public class RotatingCircleView extends View {
         float energy = 0f;
         if (bitmap != null) {
             for (int i = 0; i < data.length; i++) {
-                energy += Math.abs(data[i]);
+                energy += data[i];
             }
             energyPercent = energy / (AppConstant.isFFT ? 10000f : 100000f);
             bitmapRect.left = centerX - 100;

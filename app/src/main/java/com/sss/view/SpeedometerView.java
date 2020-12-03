@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.sss.Utils;
@@ -70,7 +69,7 @@ public class SpeedometerView extends View {
         }
         float energy = 0f;
         for (int i = 0; i < data.length; i++) {
-            energy += Math.abs(data[i]);
+            energy += data[i];
         }
         angle = energy / (AppConstant.isFFT ? 10 : 100);
         red = data[0] * 2;

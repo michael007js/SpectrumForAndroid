@@ -96,7 +96,7 @@ public class HexagramView extends View {
         }
         energy = 0f;
         for (int i = 0; i < data.length; i++) {
-            energy += Math.abs(data[i]);
+            energy += data[i];
         }
         Log.e("SSSSS", energy + "");
         calcHexagramPoint(innerPoints, (int) (radiusInner * energy / (AppConstant.isFFT ? 10000 : 100000)), energy);

@@ -77,7 +77,7 @@ public class SlipBallView extends View {
         }
         energy = 0f;
         for (int i = 0; i < data.length; i++) {
-            energy += Math.abs(data[i]);
+            energy += data[i];
         }
         slipBallBean.offset = (int) (energy / (AppConstant.isFFT ? 100 : 1000));
         invalidate();
