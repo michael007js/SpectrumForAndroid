@@ -49,6 +49,21 @@
             android:orientation="vertical">
 
             <Switch
+                android:id="@+id/switch_horizontalEnergyView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="横向能量条"
+                android:textColor="@color/colorAccent" />
+
+            <com.sss.view.HorizontalEnergyView
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:id="@+id/horizontalEnergyView"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="10dp" />
+
+            <Switch
                 android:id="@+id/switch_siriView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

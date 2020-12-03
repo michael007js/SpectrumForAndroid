@@ -15,6 +15,7 @@ import com.sss.view.CircleRoundView;
 import com.sss.view.ColumnarView;
 import com.sss.view.GridPointView;
 import com.sss.view.HexagramView;
+import com.sss.view.HorizontalEnergyView;
 import com.sss.view.RotatingCircleView;
 import com.sss.view.AiVoiceView;
 import com.sss.view.SiriView;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
     private HexagramView hexagramView;
     private SlipBallView slipBallView;
     private SiriView siriView;
+    private HorizontalEnergyView horizontalEnergyView;
 
     private Visualizer.OnDataCaptureListener dataCaptureListener = new Visualizer.OnDataCaptureListener() {
 
@@ -84,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         hexagramView.setWaveData(newData);
         slipBallView.setWaveData(newData);
         siriView.setWaveData(newData);
+        horizontalEnergyView.setWaveData(newData);
 
         time = System.currentTimeMillis();
     }
@@ -104,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         hexagramView = findViewById(R.id.hexagramView);
         slipBallView = findViewById(R.id.slipBall);
         siriView = findViewById(R.id.siriView);
+        horizontalEnergyView = findViewById(R.id.horizontalEnergyView);
 
         ((Switch) findViewById(R.id.switch_siriView)).setOnCheckedChangeListener(this);
         ((Switch) findViewById(R.id.switch_slip_ball)).setOnCheckedChangeListener(this);
@@ -117,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         ((Switch) findViewById(R.id.switch_rotatingCircle)).setOnCheckedChangeListener(this);
         ((Switch) findViewById(R.id.switch_gridPointView)).setOnCheckedChangeListener(this);
         ((Switch) findViewById(R.id.switch_button)).setOnCheckedChangeListener(this);
+        ((Switch) findViewById(R.id.switch_horizontalEnergyView)).setOnCheckedChangeListener(this);
         XXPermissions.with(this)
                 .permission("android.permission.RECORD_AUDIO")
                 .request(new OnPermission() {
@@ -139,6 +144,9 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         switch (buttonView.getId()) {
+            case R.id.switch_horizontalEnergyView:
+                horizontalEnergyView.setEnable(isChecked);
+                break;
             case R.id.switch_siriView:
                 siriView.setEnable(isChecked);
                 break;

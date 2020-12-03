@@ -23,15 +23,15 @@ import java.util.Random;
 public class CircleRoundView extends View {
     float energy = 0;
     //当频谱能量大于该值时绘制
-    private int energyEnable = 800;
+    private int energyEnable = 300;
     //半径
     private int minRadius = Utils.dp2px(30);
     //透明衰减触发位置
-    private int transparencyFallOffTrigger = 1;
+    private float transparencyFallOffTrigger = 0.3f;
     //透明度衰减量
     private int transparencyFallOffValue = 5;
     //扩散速度
-    private int speed = 20;
+    private int speed = 10;
     //中心点X轴坐标
     private int centerX;
     //中心点Y轴坐标
@@ -66,10 +66,10 @@ public class CircleRoundView extends View {
 
 
     public void setWaveData(byte[] data) {
-        if (!enable){
+        if (!enable) {
             return;
         }
-        spread();
+
         energy = 0f;
         for (int i = 0; i < data.length; i++) {
             energy += Math.abs(data[i]);
@@ -80,9 +80,10 @@ public class CircleRoundView extends View {
             circleRoundViewBean.radius = (int) (minRadius + energy / 1000);
             circleRoundViewBean.red = Utils.randomInt(random, (int) (AppConstant.RED * (energy / 10000f)), AppConstant.RED);
             circleRoundViewBean.green = Utils.randomInt(random, (int) (AppConstant.GREEN * (energy / 10000f)), AppConstant.GREEN);
-            circleRoundViewBean.blue = Utils.randomInt(random, (int) (AppConstant.BLUE * (energy / 10000f)), AppConstant.BLUE );
+            circleRoundViewBean.blue = Utils.randomInt(random, (int) (AppConstant.BLUE * (energy / 10000f)), AppConstant.BLUE);
             list.add(circleRoundViewBean);
         }
+        spread();
     }
 
     @Override
@@ -108,7 +109,7 @@ public class CircleRoundView extends View {
         super.onDraw(canvas);
         red = Utils.randomInt(random, (int) (AppConstant.RED * (energy / 10000f)), AppConstant.RED);
         green = Utils.randomInt(random, (int) (AppConstant.GREEN * (energy / 10000f)), AppConstant.GREEN);
-        blue = Utils.randomInt(random, (int) (AppConstant.BLUE  * (energy / 10000f)), AppConstant.BLUE );
+        blue = Utils.randomInt(random, (int) (AppConstant.BLUE * (energy / 10000f)), AppConstant.BLUE);
         for (int i = 0; i < list.size(); i++) {
             rectF.left = centerX - list.get(i).radius;
             rectF.right = centerX + list.get(i).radius;
@@ -118,13 +119,21 @@ public class CircleRoundView extends View {
             canvas.drawArc(rectF, 0, 360, false, paint);
         }
         removeOutOfBorder();
+//        Log.e("SSSSS", list.size() + "");
         invalidate();
     }
 
     private int getAlpha(int i, CircleRoundViewBean circleRoundViewBean) {
-        return circleRoundViewBean.radius > 50 ? AppConstant.ALPHA - i * transparencyFallOffValue : AppConstant.ALPHA;
-//        return i < list.size() - transparencyFallOffTrigger ? AppConstant.ALPHA  - i * transparencyFallOffValue : AppConstant.ALPHA;
+        float radiusPercentValue = (float) (circleRoundViewBean.radius * 1.0 / Math.max(getWidth() / 2, getHeight() / 2));
+        float indexPercentValue = list.size() == 0 ? 1.0f : i / (list.size() * 1.0f);
+
+//        Log.e("SSSSS", radiusPercentValue + "---" + indexPercentValue);
+        if (radiusPercentValue < indexPercentValue && radiusPercentValue < transparencyFallOffTrigger /*|| i == list.size() - 1*/) {
+            return AppConstant.ALPHA;
+        }
+        return (int) (AppConstant.ALPHA - (AppConstant.ALPHA * indexPercentValue));
     }
+
 
     private void spread() {
         for (int i = 0; i < list.size(); i++) {

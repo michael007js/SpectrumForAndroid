@@ -12,6 +12,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.AttributeSet;
@@ -131,7 +132,11 @@ public class RotatingCircleView extends View {
         bitmapRect.top = bitmapRect.top - maxDistance;
         bitmapRect.right = bitmapRect.right + maxDistance;
         bitmapRect.bottom = bitmapRect.bottom + maxDistance;
-        paint.setColor(Color.argb(AppConstant.ALPHA * energyPercent, 100 + AppConstant.RED * energyPercent, 120 + AppConstant.GREEN * energyPercent, 150 + AppConstant.BLUE * energyPercent));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            paint.setColor(Color.argb(AppConstant.ALPHA * energyPercent, 100 + AppConstant.RED * energyPercent, 120 + AppConstant.GREEN * energyPercent, 150 + AppConstant.BLUE * energyPercent));
+        } else {
+            paint.setColor(Color.argb((int) (AppConstant.ALPHA * energyPercent), (int) (AppConstant.ALPHA * energyPercent), (int) (100 + AppConstant.RED * energyPercent), (int) (150 + AppConstant.BLUE * energyPercent)));
+        }
         canvas.drawArc(bitmapRect, 0, 360, false, paint);
         paint.setAlpha(AppConstant.ALPHA);
         canvas.rotate(degress, centerX, centerY);
