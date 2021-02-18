@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+    android:orientation="vertical">
+
+    <com.sss.view.AiVoiceView
+        android:id="@+id/aiVoice"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="红"
+            android:textColor="@color/colorAccent" />
+
+        <cn.bar.DoubleHeadedDragonBar
+            android:id="@+id/bar1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:button_img="@mipmap/ic_launcher"
+            app:text_color="@color/colorAccent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="绿"
+            android:textColor="@color/colorAccent" />
+
+        <cn.bar.DoubleHeadedDragonBar
+            android:id="@+id/bar2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:button_img="@mipmap/ic_launcher"
+            app:text_color="@color/colorAccent" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="蓝"
+            android:textColor="@color/colorAccent" />
+
+        <cn.bar.DoubleHeadedDragonBar
+            android:id="@+id/bar3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:button_img="@mipmap/ic_launcher"
+            app:text_color="@color/colorAccent" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.sss.VisualizerHelper;
 import com.sss.spectrum.AppConstant;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * 柱状
  */
-public class ColumnarView extends View {
+public class ColumnarView extends View implements VisualizerHelper.OnVisualizerEnergyCallBack {
     //每一个能量柱的宽度
     private int width;
     //每一个能量柱之间的间距
@@ -35,10 +36,8 @@ public class ColumnarView extends View {
     private List<Rect> newData = new ArrayList<>();
     private List<Rect> blockData = new ArrayList<>();
 
-    private boolean enable;
-
-    public void setEnable(boolean enable) {
-        this.enable = enable;
+    public void setBlockSpeed(int blockSpeed) {
+        this.blockSpeed = blockSpeed;
     }
 
     public ColumnarView(Context context) {
@@ -53,10 +52,8 @@ public class ColumnarView extends View {
         super(context, attrs, defStyleAttr);
     }
 
-    public void setWaveData(byte[] data) {
-        if (!enable){
-            return;
-        }
+    @Override
+    public void setWaveData(byte[] data, float totalEnergy) {
         width = getWidth() / AppConstant.LUMP_COUNT;
 //        paint.setColor(AppConstant.COLOR);
         if (newData.size() > 0) {

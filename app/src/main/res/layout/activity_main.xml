@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#000"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+   >
 
 
     <LinearLayout
@@ -48,166 +48,102 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <Switch
-                android:id="@+id/switch_horizontalEnergyView"
+            <TextView
+                android:id="@+id/switch_horizontal_energy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="横向能量条"
                 android:textColor="@color/colorAccent" />
 
-            <com.sss.view.HorizontalEnergyView
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:id="@+id/horizontalEnergyView"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="10dp" />
+            <TextView
+                android:id="@+id/switch_ai_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="仿AI语音"
+                android:textColor="@color/colorAccent" />
 
-            <Switch
-                android:id="@+id/switch_siriView"
+            <TextView
+                android:id="@+id/switch_siri"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="人工智障Siri"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/colorAccent" />
 
-            <com.sss.view.SiriView
-                android:id="@+id/siriView"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="10dp" />
 
-            <Switch
+            <TextView
                 android:id="@+id/switch_slip_ball"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="伸缩球"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/colorAccent" />
 
-            <com.sss.view.SlipBallView
-                android:id="@+id/slipBall"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="10dp" />
-
-            <Switch
-                android:id="@+id/switch_hexagramView"
+            <TextView
+                android:id="@+id/switch_hexagram_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="六芒星"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/colorAccent" />
 
-            <com.sss.view.HexagramView
-                android:id="@+id/hexagramView"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="10dp" />
-
-            <Switch
+            <TextView
                 android:id="@+id/switch_columnar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="柱状"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/colorAccent" />
 
-            <com.sss.view.ColumnarView
-                android:id="@+id/columnar"
-                android:layout_width="match_parent"
-                android:layout_height="150dp" />
 
-            <Switch
-                android:id="@+id/switch_besselView"
+            <TextView
+                android:id="@+id/switch_bessel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="贝塞尔"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/colorAccent" />
 
-            <com.sss.view.BesselView
-                android:id="@+id/besselView"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="10dp" />
-
-            <Switch
-                android:id="@+id/switch_aiVoice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="仿AI语音"
-                android:textColor="@color/colorAccent" />
-
-            <com.sss.view.AiVoiceView
-                android:id="@+id/aiVoice"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="10dp" />
-
-
-            <Switch
+            <TextView
                 android:id="@+id/switch_waveform"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="声波"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/colorAccent" />
 
-            <com.sss.view.WaveformView
-                android:id="@+id/waveform"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="10dp" />
-
-
-            <Switch
-                android:id="@+id/switch_circleRoundView"
+            <TextView
+                android:id="@+id/switch_circle_round"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="水波扩散"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/colorAccent" />
 
-            <com.sss.view.CircleRoundView
-                android:id="@+id/circleRoundView"
-                android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:layout_marginTop="10dp" />
-
-            <Switch
-                android:id="@+id/switch_speedometerView"
+            <TextView
+                android:id="@+id/switch_speedometer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="里程表"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/colorAccent" />
 
-            <com.sss.view.SpeedometerView
-                android:id="@+id/speedometerView"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="10dp" />
-
-            <Switch
-                android:id="@+id/switch_rotatingCircle"
+            <TextView
+                android:id="@+id/switch_rotating_circle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="旋转头像"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/colorAccent" />
 
-            <com.sss.view.RotatingCircleView
-                android:id="@+id/rotatingCircle"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="10dp" />
-
-            <Switch
-                android:id="@+id/switch_gridPointView"
+            <TextView
+                android:id="@+id/switch_grid_point"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="随机棋盘"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/colorAccent" />
-
-            <com.sss.view.GridPointView
-                android:id="@+id/gridPointView"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
-                android:layout_marginTop="10dp" />
-
-
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>

@@ -14,13 +14,14 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import com.sss.Utils;
+import com.sss.VisualizerHelper;
 import com.sss.spectrum.AppConstant;
 import com.sss.spectrum.R;
 
 /**
  * 动感の圆
  */
-public class RotatingCircleView extends View {
+public class RotatingCircleView extends View implements VisualizerHelper.OnVisualizerEnergyCallBack {
     //中心点
     private int centerX, centerY;
     //音频能量百分比
@@ -28,21 +29,15 @@ public class RotatingCircleView extends View {
     //旋转角度
     private float degress = 0f;
     //半径
-    private int radius = Utils.dp2px(100);
+    private int radius = Utils.dp2px(200);
 
-    private final float maxDistance = Utils.dp2px(25);
+    private final float maxDistance = Utils.dp2px(100);
 
     private Bitmap bitmap;
     private Matrix matrix = new Matrix();
     private Paint paint = new Paint();
     private RectF bitmapRect = new RectF();
     private ValueAnimator valueAnimator;
-
-    private boolean enable;
-
-    public void setEnable(boolean enable) {
-        this.enable = enable;
-    }
 
     public RotatingCircleView(Context context) {
         super(context);
@@ -95,16 +90,11 @@ public class RotatingCircleView extends View {
         setMeasuredDimension(widthSize, heightSize);
     }
 
-    public void setWaveData(byte[] data) {
-        if (!enable) {
-            return;
-        }
-        float energy = 0f;
+    @Override
+    public void setWaveData(byte[] data, float totalEnergy) {
+
         if (bitmap != null) {
-            for (int i = 0; i < data.length; i++) {
-                energy += data[i];
-            }
-            energyPercent = energy / (AppConstant.isFFT ? 10000f : 100000f);
+            energyPercent = totalEnergy / (AppConstant.isFFT ? 100f : 1000f);
             bitmapRect.left = centerX - 100;
             bitmapRect.top = centerY - 100;
             bitmapRect.right = centerX + 100;

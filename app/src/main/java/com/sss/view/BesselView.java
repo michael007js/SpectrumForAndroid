@@ -7,33 +7,34 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
-import android.graphics.Rect;
+import android.graphics.PointF;
 import android.graphics.Shader;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.sss.Utils;
+import com.sss.VisualizerHelper;
 import com.sss.spectrum.AppConstant;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BesselView extends View {
+public class BesselView extends View implements VisualizerHelper.OnVisualizerEnergyCallBack {
 
     //圆心点
     private int centerX, centerY;
     //每一个顶点之间的间距
     private int spacing = 5;
 
+    private float sharpenRatio = 0.5f;
+
+
     private Paint paint = new Paint();
     private Path path = new Path();
-    private List<Point> list = new ArrayList<>();
+    private List<PointF> list = new ArrayList<>();
 
-    private boolean enable;
-
-    public void setEnable(boolean enable) {
-        this.enable = enable;
+    public void setSharpenRatio(float sharpenRatio) {
+        this.sharpenRatio = sharpenRatio;
     }
 
     public BesselView(Context context) {
@@ -63,35 +64,26 @@ public class BesselView extends View {
         paint.setShader(new LinearGradient(0f, 0f, getWidth(), getHeight(), new int[]{0xffff0000, 0xffaaaa00, 0xffffff00}, new float[]{0, 0.5f, 1f}, Shader.TileMode.CLAMP));
     }
 
-    public void setWaveData(byte[] data) {
-        if (!enable){
-            return;
-        }
+    @Override
+    public void setWaveData(byte[] data, float totalEnergy) {
         paint.setColor(Color.WHITE);
         list.clear();
         for (int i = 0; i < data.length; i++) {
-            Point point = new Point();
+            PointF point = new PointF();
             if (list.size() == 0) {
                 point.x = 0;
-                point.y = (int) (getHeight() + getHeight() / 1.3);
+                point.y = getHeight();
             } else {
                 point.x = list.get(list.size() - 1).x + spacing;
-                point.y = (int) (getHeight() + getHeight() / 1.3 - data[i] * AppConstant.LAGER_OFFSET * 1.5);
+                point.y = getHeight() - data[i] * AppConstant.LAGER_OFFSET * 1.5f;
             }
             list.add(point);
         }
 
         path.reset();
-        for (int i = 0; i < list.size(); i++) {
-            if (i == 0) {
-                path.moveTo(list.get(i).x, list.get(i).y);
-            } else {
-                if (i < list.size() - 1) {
-                    path.cubicTo(list.get(i - 1).x, list.get(i - 1).y, list.get(i).x, list.get(i).y - list.get(i - 1).y, list.get(i + 1).x, list.get(i + 1).y);
-                }
-            }
-        }
-        path.moveTo(list.get(0).x, list.get(0).y);
+        Utils.calculateBezier3(list, sharpenRatio, path);
+        path.lineTo(getWidth(), getHeight());
+        path.lineTo(0, getHeight());
         path.close();
     }
 
@@ -101,4 +93,5 @@ public class BesselView extends View {
         canvas.drawPath(path, paint);
         invalidate();
     }
+
 }

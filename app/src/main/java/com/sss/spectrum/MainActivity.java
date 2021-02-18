@@ -1,134 +1,34 @@
 package com.sss.spectrum;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.CompoundButton;
-import android.widget.Switch;
+import android.view.View;
 
 import com.hjq.permissions.OnPermission;
 import com.hjq.permissions.XXPermissions;
-import com.sss.view.BesselView;
-import com.sss.view.CircleRoundView;
-import com.sss.view.ColumnarView;
-import com.sss.view.GridPointView;
-import com.sss.view.HexagramView;
-import com.sss.view.HorizontalEnergyView;
-import com.sss.view.RotatingCircleView;
-import com.sss.view.AiVoiceView;
-import com.sss.view.SiriView;
-import com.sss.view.SpeedometerView;
-import com.sss.view.WaveformView;
-import com.sss.view.SlipBallView;
+import com.sss.VisualizerHelper;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Visualizer visualizer;
     private MediaPlayer player;
-    private long time;
 
-    private ColumnarView columnar;
-    private WaveformView waveform;
-    private RotatingCircleView rotatingCircle;
-    private AiVoiceView aiVoice;
-    private GridPointView gridPointView;
-    private SpeedometerView speedometerView;
-    private CircleRoundView circleRoundView;
-    private BesselView besselView;
-    private HexagramView hexagramView;
-    private SlipBallView slipBallView;
-    private SiriView siriView;
-    private HorizontalEnergyView horizontalEnergyView;
-
-    private Visualizer.OnDataCaptureListener dataCaptureListener = new Visualizer.OnDataCaptureListener() {
-
-
-        @Override
-        public void onWaveFormDataCapture(Visualizer visualizer, final byte[] fft, int samplingRate) {
-//            Log.e("SSSSS", System.currentTimeMillis() - time + "---" + (2000 / AppConstant.FPS));
-            if (!AppConstant.isFFT) {
-                dispose(fft);
-            }
-        }
-
-        @Override
-        public void onFftDataCapture(Visualizer visualizer, final byte[] fft, int samplingRate) {
-//            Log.e("SSSSS", System.currentTimeMillis() - time + "---" + (2000 / AppConstant.FPS));
-            if (AppConstant.isFFT) {
-                dispose(fft);
-            }
-        }
-
-    };
-
-    private void dispose(byte[] data) {
-        if (System.currentTimeMillis() - time < 2000 / AppConstant.FPS) {
-            return;
-        }
-        byte[] newData = new byte[AppConstant.LUMP_COUNT];
-        byte abs;
-        for (int i = 0; i < AppConstant.LUMP_COUNT; i++) {
-            abs = (byte) Math.abs(data[i]);
-            //Math.abs -128时越界
-            newData[i] = abs < 0 ? AppConstant.LUMP_COUNT : abs;
-        }
-        columnar.setWaveData(newData);
-        waveform.setWaveData(newData);
-        rotatingCircle.setWaveData(newData);
-        aiVoice.setWaveData(newData);
-        gridPointView.setWaveData(newData);
-        speedometerView.setWaveData(newData);
-        circleRoundView.setWaveData(newData);
-        besselView.setWaveData(newData);
-        hexagramView.setWaveData(newData);
-        slipBallView.setWaveData(newData);
-        siriView.setWaveData(newData);
-        horizontalEnergyView.setWaveData(newData);
-
-        time = System.currentTimeMillis();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        columnar = findViewById(R.id.columnar);
-        waveform = findViewById(R.id.waveform);
-        rotatingCircle = findViewById(R.id.rotatingCircle);
-        aiVoice = findViewById(R.id.aiVoice);
-        gridPointView = findViewById(R.id.gridPointView);
-        speedometerView = findViewById(R.id.speedometerView);
-        circleRoundView = findViewById(R.id.circleRoundView);
-        besselView = findViewById(R.id.besselView);
-        hexagramView = findViewById(R.id.hexagramView);
-        slipBallView = findViewById(R.id.slipBall);
-        siriView = findViewById(R.id.siriView);
-        horizontalEnergyView = findViewById(R.id.horizontalEnergyView);
-
-        ((Switch) findViewById(R.id.switch_siriView)).setOnCheckedChangeListener(this);
-        ((Switch) findViewById(R.id.switch_slip_ball)).setOnCheckedChangeListener(this);
-        ((Switch) findViewById(R.id.switch_hexagramView)).setOnCheckedChangeListener(this);
-        ((Switch) findViewById(R.id.switch_columnar)).setOnCheckedChangeListener(this);
-        ((Switch) findViewById(R.id.switch_besselView)).setOnCheckedChangeListener(this);
-        ((Switch) findViewById(R.id.switch_aiVoice)).setOnCheckedChangeListener(this);
-        ((Switch) findViewById(R.id.switch_waveform)).setOnCheckedChangeListener(this);
-        ((Switch) findViewById(R.id.switch_circleRoundView)).setOnCheckedChangeListener(this);
-        ((Switch) findViewById(R.id.switch_speedometerView)).setOnCheckedChangeListener(this);
-        ((Switch) findViewById(R.id.switch_rotatingCircle)).setOnCheckedChangeListener(this);
-        ((Switch) findViewById(R.id.switch_gridPointView)).setOnCheckedChangeListener(this);
-        ((Switch) findViewById(R.id.switch_button)).setOnCheckedChangeListener(this);
-        ((Switch) findViewById(R.id.switch_horizontalEnergyView)).setOnCheckedChangeListener(this);
         XXPermissions.with(this)
                 .permission("android.permission.RECORD_AUDIO")
                 .request(new OnPermission() {
                     @Override
                     public void hasPermission(List<String> granted, boolean isAll) {
 
-                        play();
+                        okey();
 
                     }
 
@@ -137,55 +37,22 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
 
                     }
                 });
-
-
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        switch (buttonView.getId()) {
-            case R.id.switch_horizontalEnergyView:
-                horizontalEnergyView.setEnable(isChecked);
-                break;
-            case R.id.switch_siriView:
-                siriView.setEnable(isChecked);
-                break;
-            case R.id.switch_hexagramView:
-                hexagramView.setEnable(isChecked);
-                break;
-            case R.id.switch_slip_ball:
-                slipBallView.setEnable(isChecked);
-                break;
-            case R.id.switch_columnar:
-                columnar.setEnable(isChecked);
-                break;
-            case R.id.switch_besselView:
-                besselView.setEnable(isChecked);
-                break;
-            case R.id.switch_aiVoice:
-                aiVoice.setEnable(isChecked);
-                break;
-            case R.id.switch_waveform:
-                waveform.setEnable(isChecked);
-                break;
-            case R.id.switch_circleRoundView:
-                circleRoundView.setEnable(isChecked);
-                break;
-            case R.id.switch_speedometerView:
-                speedometerView.setEnable(isChecked);
-                break;
-            case R.id.switch_rotatingCircle:
-                rotatingCircle.setEnable(isChecked);
-                break;
-            case R.id.switch_gridPointView:
-                gridPointView.setEnable(isChecked);
-                break;
-            case R.id.switch_button:
-                AppConstant.isFFT = isChecked;
-        }
-    }
+    private void okey() {
+        findViewById(R.id.switch_horizontal_energy).setOnClickListener(this);
+        findViewById(R.id.switch_ai_voice).setOnClickListener(this);
+        findViewById(R.id.switch_siri).setOnClickListener(this);
+        findViewById(R.id.switch_slip_ball).setOnClickListener(this);
+        findViewById(R.id.switch_hexagram_view).setOnClickListener(this);
+        findViewById(R.id.switch_columnar).setOnClickListener(this);
+        findViewById(R.id.switch_bessel).setOnClickListener(this);
+        findViewById(R.id.switch_waveform).setOnClickListener(this);
+        findViewById(R.id.switch_circle_round).setOnClickListener(this);
+        findViewById(R.id.switch_speedometer).setOnClickListener(this);
+        findViewById(R.id.switch_rotating_circle).setOnClickListener(this);
+        findViewById(R.id.switch_grid_point).setOnClickListener(this);
 
-    private void play() {
         player = MediaPlayer.create(MainActivity.this, R.raw.demo);
         player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -204,12 +71,56 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
             visualizer.release();
         }
         //可视化数据的大小： getCaptureSizeRange()[0]为最小值，getCaptureSizeRange()[1]为最大值
-        int captureSize = Visualizer.getCaptureSizeRange()[0];
+        int captureSize = Visualizer.getCaptureSizeRange()[1];
         int captureRate = Visualizer.getMaxCaptureRate() * 3 / 4;
 
         visualizer.setCaptureSize(captureSize);
-        visualizer.setDataCaptureListener(dataCaptureListener, captureRate, true, true);
+        visualizer.setDataCaptureListener(VisualizerHelper.getInstance().getDataCaptureListener(), captureRate, true, true);
         visualizer.setScalingMode(Visualizer.SCALING_MODE_NORMALIZED);
         visualizer.setEnabled(true);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.switch_horizontal_energy:
+                startActivity(new Intent(this, HorizontalEnergyActivity.class));
+                break;
+            case R.id.switch_ai_voice:
+                startActivity(new Intent(this, AiVoiceActivity.class));
+                break;
+            case R.id.switch_siri:
+                startActivity(new Intent(this, SiriActivity.class));
+                break;
+            case R.id.switch_slip_ball:
+                startActivity(new Intent(this, SlipBallActivity.class));
+                break;
+            case R.id.switch_hexagram_view:
+                startActivity(new Intent(this, HexagramViewActivity.class));
+                break;
+            case R.id.switch_columnar:
+                startActivity(new Intent(this, ColumnarActivity.class));
+                break;
+            case R.id.switch_bessel:
+                startActivity(new Intent(this, BesselActivity.class));
+                break;
+            case R.id.switch_waveform:
+                startActivity(new Intent(this, WaveActivity.class));
+                break;
+            case R.id.switch_circle_round:
+                startActivity(new Intent(this, CircleRoundActivity.class));
+                break;
+            case R.id.switch_speedometer:
+                startActivity(new Intent(this, SpeedometerActivity.class));
+                break;
+            case R.id.switch_rotating_circle:
+                startActivity(new Intent(this, RotatingCircleActivity.class));
+                break;
+            case R.id.switch_grid_point:
+                startActivity(new Intent(this, GridPointActivity.class));
+                break;
+            default:
+        }
     }
 }

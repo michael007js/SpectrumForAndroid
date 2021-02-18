@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.sss.spectrum", appContext.getPackageName());
+        assertEquals("com.activity_hexagram.spectrum", appContext.getPackageName());
     }
 }

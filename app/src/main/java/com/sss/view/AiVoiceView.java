@@ -10,6 +10,7 @@ import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.sss.VisualizerHelper;
 import com.sss.bean.AiVoiceViewBean;
 import com.sss.spectrum.AppConstant;
 
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * AI语音
  */
-public class AiVoiceView extends View {
+public class AiVoiceView extends View implements VisualizerHelper.OnVisualizerEnergyCallBack {
     //初始Y轴
     private int defultY;
 
@@ -29,11 +30,6 @@ public class AiVoiceView extends View {
     private List<AiVoiceViewBean> attribute = new ArrayList<>();
     private List<Path> paths = new ArrayList<>();
 
-    private boolean enable;
-
-    public void setEnable(boolean enable) {
-        this.enable = enable;
-    }
 
     public AiVoiceView(Context context) {
         super(context);
@@ -50,36 +46,53 @@ public class AiVoiceView extends View {
         init();
     }
 
+
     private void init() {
         setLayerType(LAYER_TYPE_SOFTWARE, null);
         paint.setAntiAlias(true);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.LIGHTEN));
+
+        paths.clear();
+        paths.add(new Path());
+        paths.add(new Path());
+        paths.add(new Path());
+
         AiVoiceViewBean red = new AiVoiceViewBean();
         red.color = Color.argb(AppConstant.ALPHA, AppConstant.RED, 0, 0);
-        red.start = 0f;
-        red.end = 0.8f;
         attribute.add(red);
-        paths.add(new Path());
+
         AiVoiceViewBean green = new AiVoiceViewBean();
         green.color = Color.argb(AppConstant.ALPHA, 0, AppConstant.GREEN, 0);
-        green.start = 0.1f;
-        green.end = 0.9f;
         attribute.add(green);
-        paths.add(new Path());
+
         AiVoiceViewBean blue = new AiVoiceViewBean();
         blue.color = Color.argb(AppConstant.ALPHA, 0, 0, AppConstant.BLUE);
-        blue.start = 0.2f;
-        blue.end = 1.0f;
         attribute.add(blue);
-        paths.add(new Path());
+        setParameter(0, 0f, 0.8f);
+        setParameter(1, 0.1f, 0.9f);
+        setParameter(2, 0.2f, 1.0f);
+    }
+
+    public void setParameter(int what, float start, float end) {
+        switch (what) {
+            case 0:
+                attribute.get(0).start = start;
+                attribute.get(0).end = end;
+                break;
+            case 1:
+                attribute.get(1).start = start;
+                attribute.get(1).end = end;
+                break;
+            case 2:
+                attribute.get(2).start = start;
+                attribute.get(2).end = end;
+                break;
+        }
 
     }
 
-
-    public void setWaveData(byte[] data) {
-        if (!enable) {
-            return;
-        }
+    @Override
+    public void setWaveData(byte[] data, float totalEnergy) {
         if (attribute.size() != paths.size()) {
             return;
         }
@@ -104,18 +117,10 @@ public class AiVoiceView extends View {
 
     private int getEnergyByPoint(AiVoiceViewBean bean, byte[] data) {
         int index = (int) (data.length * (bean.end + bean.start) / 2);
-        if (AppConstant.isFFT) {
-            if (index < data.length) {
-                return (Math.abs(Math.abs(data[index])) - 2) * (AppConstant.LAGER_OFFSET);
-            } else {
-                return (Math.abs(Math.abs(data[data.length - 1])) + 2) * AppConstant.LAGER_OFFSET;
-            }
+        if (index < data.length) {
+            return (int) ((Math.abs(Math.abs(data[index])) - 2) * 1.5);
         } else {
-            if (index < data.length) {
-                return (Math.abs(Math.abs(data[index])) - 2);
-            } else {
-                return (Math.abs(Math.abs(data[data.length - 1])) + 2);
-            }
+            return (int) ((Math.abs(Math.abs(data[data.length - 1])) + 2) * 1.5);
         }
     }
 
@@ -129,4 +134,5 @@ public class AiVoiceView extends View {
         }
         invalidate();
     }
+
 }

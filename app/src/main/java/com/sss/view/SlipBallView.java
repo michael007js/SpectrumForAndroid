@@ -9,6 +9,7 @@ import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.sss.VisualizerHelper;
 import com.sss.bean.SlipBallBean;
 import com.sss.spectrum.AppConstant;
 
@@ -16,23 +17,11 @@ import com.sss.spectrum.AppConstant;
 /**
  * 伸缩球
  */
-public class SlipBallView extends View {
-    //总能量
-    private float energy;
-    //外星
+public class SlipBallView extends View implements VisualizerHelper.OnVisualizerEnergyCallBack {
+    //半径
     private int radius;
-    //线宽
-    private int stroke = 2;
-    //实时旋转角度
-    private float angle = 0;
     //圆心点
     private int centerX, centerY;
-
-    private boolean enable;
-
-    public void setEnable(boolean enable) {
-        this.enable = enable;
-    }
 
     private SlipBallBean slipBallBean = new SlipBallBean();
 
@@ -62,27 +51,21 @@ public class SlipBallView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        radius = Math.min(w, h) / 3 - stroke * 2;
-        centerX = w / 2 - stroke;
-        centerY = h / 2 - stroke;
+        radius = Math.min(w, h) / 3;
+        centerX = w / 2;
+        centerY = h / 2;
         slipBallBean.paintInner.setShader(new RadialGradient(centerX, centerY, radius, Color.RED, Color.YELLOW, Shader.TileMode.CLAMP));
         slipBallBean.paintOutter.setShader(new RadialGradient(centerX, centerY, radius, Color.YELLOW, Color.RED, Shader.TileMode.CLAMP));
 
 
     }
 
-    public void setWaveData(byte[] data) {
-        if (!enable) {
-            return;
-        }
-        energy = 0f;
-        for (int i = 0; i < data.length; i++) {
-            energy += data[i];
-        }
-        slipBallBean.offset = (int) (energy / (AppConstant.isFFT ? 100 : 1000));
+
+    @Override
+    public void setWaveData(byte[] data, float totalEnergy) {
+        slipBallBean.offset = (int) (totalEnergy / (AppConstant.isFFT ? 100 : 1000));
         invalidate();
     }
-
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -94,6 +77,4 @@ public class SlipBallView extends View {
         canvas.drawCircle(centerX, centerY, slipBallBean.radiusInner, slipBallBean.paintInner);
 
     }
-
-
 }

@@ -7,6 +7,7 @@ import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.sss.VisualizerHelper;
 import com.sss.spectrum.AppConstant;
 
 import java.util.ArrayList;
@@ -15,21 +16,20 @@ import java.util.List;
 /**
  * 波形
  */
-public class WaveformView extends View {
+public class WaveformView extends View implements VisualizerHelper.OnVisualizerEnergyCallBack {
     //初始波形Y轴
     private int defultY;
     //每一个波形点之间的间距
     private int spacing = 5;
+    private int offset=0;
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
 
     private Paint paint = new Paint();
 
     private List<Point> newData = new ArrayList<>();
-
-    private boolean enable;
-
-    public void setEnable(boolean enable) {
-        this.enable = enable;
-    }
 
 
     public WaveformView(Context context) {
@@ -44,14 +44,12 @@ public class WaveformView extends View {
         super(context, attrs, defStyleAttr);
     }
 
+    @Override
+    public void setWaveData(byte[] data, float totalEnergy) {
 
-    public void setWaveData(byte[] data) {
-        if (!enable){
-            return;
-        }
         paint.setStrokeWidth(3);
         paint.setColor(AppConstant.COLOR);
-        spacing = getWidth() / AppConstant.LUMP_COUNT;
+        spacing = getWidth() / AppConstant.LUMP_COUNT+offset;
         defultY = getHeight() / 2;
         newData.clear();
         for (int i = 0; i < data.length; i++) {
@@ -82,4 +80,5 @@ public class WaveformView extends View {
         }
         invalidate();
     }
+
 }

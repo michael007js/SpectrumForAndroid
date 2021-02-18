@@ -15,4 +15,5 @@ public class AppConstant {
     public static final long FPS = 300;
     //放大量
     public static final int LAGER_OFFSET = isFFT ? 3 : 0;
+
 }

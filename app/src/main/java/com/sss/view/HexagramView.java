@@ -6,10 +6,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.sss.Utils;
+import com.sss.VisualizerHelper;
 import com.sss.spectrum.AppConstant;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.Random;
  * Do Mo Ke Sa La Mo!
  * 出来吧、光能使者!
  */
-public class HexagramView extends View {
+public class HexagramView extends View implements VisualizerHelper.OnVisualizerEnergyCallBack {
     //总能量
     private float energy;
     //外星实时旋转角度
@@ -43,11 +43,6 @@ public class HexagramView extends View {
     private Paint paint = new Paint();
     private Random random = new Random();
 
-    private boolean enable;
-
-    public void setEnable(boolean enable) {
-        this.enable = enable;
-    }
 
     public HexagramView(Context context) {
         super(context);
@@ -90,19 +85,12 @@ public class HexagramView extends View {
     }
 
 
-    public void setWaveData(byte[] data) {
-        if (!enable){
-            return;
-        }
-        energy = 0f;
-        for (int i = 0; i < data.length; i++) {
-            energy += data[i];
-        }
-        Log.e("SSSSS", energy + "");
+    @Override
+    public void setWaveData(byte[] data, float totalEnergy) {
+        energy = totalEnergy;
         calcHexagramPoint(innerPoints, (int) (radiusInner * energy / (AppConstant.isFFT ? 10000 : 100000)), energy);
         invalidate();
     }
-
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -152,5 +140,4 @@ public class HexagramView extends View {
             }
         }
     }
-
 }

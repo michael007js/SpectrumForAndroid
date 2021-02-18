@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.sss.Utils;
+import com.sss.VisualizerHelper;
 import com.sss.bean.CircleRoundViewBean;
 import com.sss.spectrum.AppConstant;
 
@@ -19,7 +20,7 @@ import java.util.Random;
 /**
  * 扩散の环
  */
-public class CircleRoundView extends View {
+public class CircleRoundView extends View implements VisualizerHelper.OnVisualizerEnergyCallBack {
     float energy = 0;
     //当频谱能量大于该值时绘制
     private int energyEnable = 300;
@@ -27,8 +28,6 @@ public class CircleRoundView extends View {
     private int minRadius = Utils.dp2px(30);
     //透明衰减触发位置
     private float transparencyFallOffTrigger = 0.3f;
-    //透明度衰减量
-    private int transparencyFallOffValue = 5;
     //扩散速度
     private int speed = 10;
     //中心点X轴坐标
@@ -41,12 +40,6 @@ public class CircleRoundView extends View {
     private List<CircleRoundViewBean> list = new ArrayList<>();
     private Random random = new Random();
     private Paint paint = new Paint();
-
-    private boolean enable;
-
-    public void setEnable(boolean enable) {
-        this.enable = enable;
-    }
 
     public CircleRoundView(Context context) {
         super(context);
@@ -63,16 +56,13 @@ public class CircleRoundView extends View {
         init();
     }
 
+    public void setTransparencyFallOffTrigger(float transparencyFallOffTrigger) {
+        this.transparencyFallOffTrigger = transparencyFallOffTrigger;
+    }
 
-    public void setWaveData(byte[] data) {
-        if (!enable) {
-            return;
-        }
-
-        energy = 0f;
-        for (int i = 0; i < data.length; i++) {
-            energy += data[i];
-        }
+    @Override
+    public void setWaveData(byte[] data, float totalEnergy) {
+        energy = totalEnergy;
 //        Log.e("SSSSS", energy + "");
         if (energy > energyEnable) {
             CircleRoundViewBean circleRoundViewBean = new CircleRoundViewBean();

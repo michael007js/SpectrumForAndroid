@@ -6,18 +6,17 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.sss.Utils;
+import com.sss.VisualizerHelper;
 import com.sss.bean.HorizontalEnergyViewBean;
 import com.sss.spectrum.AppConstant;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HorizontalEnergyView extends View {
-    private boolean enable;
+public class HorizontalEnergyView extends View implements VisualizerHelper.OnVisualizerEnergyCallBack {
     public boolean isCircle = true;
     private int clearance = Utils.dp2px(5);
     private int count = 20;
@@ -25,8 +24,14 @@ public class HorizontalEnergyView extends View {
     private Paint backgroundPaint = new Paint();
     private Paint paint = new Paint();
 
-    public void setEnable(boolean enable) {
-        this.enable = enable;
+    public void setCircle(boolean circle) {
+        isCircle = circle;
+        requestLayout();
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+        requestLayout();
     }
 
     public HorizontalEnergyView(Context context) {
@@ -55,25 +60,17 @@ public class HorizontalEnergyView extends View {
     }
 
 
-    public void setWaveData(byte[] data) {
-        invalidate();
-        if (!enable) {
-            return;
-        }
-        float energy = 0f;
-        for (int i = 0; i < data.length; i++) {
-            energy += data[i];
-        }
-        energy = energy / (AppConstant.isFFT ? 10 : 100);
+    @Override
+    public void setWaveData(byte[] data, float totalEnergy) {
 
-        Log.e("SSSSS", energy + "");
-        int total = (int) (energy / 10);
+        int total = (int) (totalEnergy / (AppConstant.isFFT ? 10 : 100) / 10);
         for (int i = 0; i < list.size(); i++) {
             list.get(i).enable = i < total;
 
         }
         invalidate();
     }
+
 
     @Override
     public void layout(int l, int t, int r, int b) {
@@ -103,7 +100,6 @@ public class HorizontalEnergyView extends View {
             } else {
                 canvas.drawRect(list.get(i).rect, backgroundPaint);
             }
-
             if (list.get(i).enable) {
                 paint.setColor(Color.WHITE);
                 if (isCircle) {

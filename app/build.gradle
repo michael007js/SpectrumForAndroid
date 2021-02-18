@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.sss.spectrum"
+        applicationId "com.activity_hexagram.spectrum"
         minSdkVersion 17
         targetSdkVersion 28
         versionCode 1
@@ -26,4 +26,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation "com.hjq:xxpermissions:1.5"
+    implementation 'com.github.yujinzhao123:DoubleHeadedDragonBar:1.0.4'
 }

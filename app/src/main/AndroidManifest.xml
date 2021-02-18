@@ -12,6 +12,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,6 +20,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".HorizontalEnergyActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".AiVoiceActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".SiriActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".SlipBallActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".HexagramViewActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".ColumnarActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".BesselActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".WaveActivity"
+            android:screenOrientation="landscape"  />
+        <activity android:name=".CircleRoundActivity"
+            android:screenOrientation="landscape"  />
+        <activity android:name=".SpeedometerActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".RotatingCircleActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".GridPointActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
