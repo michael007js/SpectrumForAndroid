@@ -30,7 +30,7 @@ public class SpeedometerView extends View implements VisualizerHelper.OnVisualiz
     //圆弧点与圆边距离
     private int distance = 50;
 
-    private float maxSpeed=20f;
+    private float maxSpeed=100f;
 
     private Paint paint = new Paint();
 
