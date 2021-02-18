@@ -1,4 +1,6 @@
  ** **SpectrumForAndroid** ** 
+ 
+[一个android平台下的稀有自绘控件集合](https://github.com/michael007js/SimpleViewSet)
 
 No picture u say a j8!
 
