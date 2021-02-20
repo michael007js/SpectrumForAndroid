@@ -44,6 +44,8 @@
             android:screenOrientation="landscape" />
         <activity android:name=".GridPointActivity"
             android:screenOrientation="landscape" />
+        <activity android:name=".ColorBubbleActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

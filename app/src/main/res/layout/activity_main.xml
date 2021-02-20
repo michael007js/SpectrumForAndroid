@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000"
-    android:orientation="vertical"
-   >
+    android:orientation="vertical">
 
 
     <LinearLayout
@@ -49,9 +48,18 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/switch_flower"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="多彩泡泡"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
                 android:id="@+id/switch_horizontal_energy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="横向能量条"
                 android:textColor="@color/colorAccent" />
 
@@ -67,8 +75,8 @@
                 android:id="@+id/switch_siri"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="人工智障Siri"
                 android:layout_marginTop="10dp"
+                android:text="人工智障Siri"
                 android:textColor="@color/colorAccent" />
 
 
@@ -76,24 +84,24 @@
                 android:id="@+id/switch_slip_ball"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="伸缩球"
                 android:layout_marginTop="10dp"
+                android:text="伸缩球"
                 android:textColor="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/switch_hexagram_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="六芒星"
                 android:layout_marginTop="10dp"
+                android:text="六芒星"
                 android:textColor="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/switch_columnar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="柱状"
                 android:layout_marginTop="10dp"
+                android:text="柱状"
                 android:textColor="@color/colorAccent" />
 
 
@@ -101,48 +109,48 @@
                 android:id="@+id/switch_bessel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="贝塞尔"
                 android:layout_marginTop="10dp"
+                android:text="贝塞尔"
                 android:textColor="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/switch_waveform"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="声波"
                 android:layout_marginTop="10dp"
+                android:text="声波"
                 android:textColor="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/switch_circle_round"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="水波扩散"
                 android:layout_marginTop="10dp"
+                android:text="水波扩散"
                 android:textColor="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/switch_speedometer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="里程表"
                 android:layout_marginTop="10dp"
+                android:text="里程表"
                 android:textColor="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/switch_rotating_circle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="旋转头像"
                 android:layout_marginTop="10dp"
+                android:text="旋转头像"
                 android:textColor="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/switch_grid_point"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="随机棋盘"
                 android:layout_marginTop="10dp"
+                android:text="随机棋盘"
                 android:textColor="@color/colorAccent" />
         </LinearLayout>
 

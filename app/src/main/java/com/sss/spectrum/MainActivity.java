@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.switch_speedometer).setOnClickListener(this);
         findViewById(R.id.switch_rotating_circle).setOnClickListener(this);
         findViewById(R.id.switch_grid_point).setOnClickListener(this);
+        findViewById(R.id.switch_flower).setOnClickListener(this);
 
         player = MediaPlayer.create(MainActivity.this, R.raw.demo);
         player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -62,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         player.setLooping(true);
         player.start();
-
 
         int mediaPlayerId = player.getAudioSessionId();
         if (visualizer == null) {
@@ -119,6 +119,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.switch_grid_point:
                 startActivity(new Intent(this, GridPointActivity.class));
+                break;
+            case R.id.switch_flower:
+                startActivity(new Intent(this, ColorBubbleActivity.class));
                 break;
             default:
         }
