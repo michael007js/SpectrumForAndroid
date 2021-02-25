@@ -24,7 +24,7 @@ public class ColumnarView extends View implements VisualizerHelper.OnVisualizerE
     //每一个能量柱的宽度
     private int width;
     //每一个能量柱之间的间距
-    private int spacing = 5;
+    private int spacing = 1;
     //能量块高度
     private int blockHeight = 5;
     //能量块下将速度
@@ -90,7 +90,7 @@ public class ColumnarView extends View implements VisualizerHelper.OnVisualizerE
                 rect.left = newData.get(newData.size() - 1).right + spacing;
             }
             rect.top = getHeight() - data[i] * AppConstant.LAGER_OFFSET;
-            rect.right = rect.left + width;
+            rect.right = rect.left + width-spacing;
             rect.bottom = getHeight();
             newData.add(rect);
         }
