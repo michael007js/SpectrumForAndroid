@@ -5,6 +5,8 @@
 No picture u say a j8!
 
 少啰嗦，先看效果
+![扩散环](https://github.com/michael007js/SpectrumForAndroid/blob/master/gif/diffusion_ring.gif "扩散环")
+![仿网易云音乐](https://github.com/michael007js/SpectrumForAndroid/blob/master/gif/attachment_ring.gif "仿网易云音乐")
 ![多彩泡泡](https://github.com/michael007js/SpectrumForAndroid/blob/master/gif/demo_color_bubble.gif "多彩泡泡")
 ![仿AI语音](https://github.com/michael007js/SpectrumForAndroid/blob/master/gif/demo_ai_voice.gif "仿AI语音")
 ![贝塞尔](https://github.com/michael007js/SpectrumForAndroid/blob/master/gif/demo_bessel.gif "贝塞尔")
