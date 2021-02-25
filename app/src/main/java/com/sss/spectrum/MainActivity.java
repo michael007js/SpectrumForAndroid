@@ -6,6 +6,7 @@ import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Switch;
 
 import com.hjq.permissions.OnPermission;
 import com.hjq.permissions.XXPermissions;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void okey() {
+        findViewById(R.id.switch_button).setOnClickListener(this);
         findViewById(R.id.switch_horizontal_energy).setOnClickListener(this);
         findViewById(R.id.switch_ai_voice).setOnClickListener(this);
         findViewById(R.id.switch_siri).setOnClickListener(this);
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.switch_rotating_circle).setOnClickListener(this);
         findViewById(R.id.switch_grid_point).setOnClickListener(this);
         findViewById(R.id.switch_flower).setOnClickListener(this);
+        findViewById(R.id.switch_ring).setOnClickListener(this);
+        findViewById(R.id.switch_diffusion).setOnClickListener(this);
 
         player = MediaPlayer.create(MainActivity.this, R.raw.demo);
         player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -84,6 +88,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.switch_button:
+                AppConstant.imageValue = ((Switch) findViewById(R.id.switch_button)).isChecked();
+                break;
             case R.id.switch_horizontal_energy:
                 startActivity(new Intent(this, HorizontalEnergyActivity.class));
                 break;
@@ -122,6 +129,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.switch_flower:
                 startActivity(new Intent(this, ColorBubbleActivity.class));
+                break;
+            case R.id.switch_ring:
+                startActivity(new Intent(this, AttachmentRingActivity.class));
+                break;
+            case R.id.switch_diffusion:
+                startActivity(new Intent(this, DiffusionRingActivity.class));
                 break;
             default:
         }

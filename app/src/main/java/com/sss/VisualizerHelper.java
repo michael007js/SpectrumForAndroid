@@ -7,6 +7,7 @@ import com.sss.spectrum.AppConstant;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public class VisualizerHelper {
     private static VisualizerHelper helper;
 
@@ -47,12 +48,30 @@ public class VisualizerHelper {
         float energy = 0f;
         byte[] newData = new byte[AppConstant.LUMP_COUNT];
         byte abs;
-        for (int i = 0; i < AppConstant.LUMP_COUNT; i++) {
-            abs = (byte) Math.abs(data[i]);
-            //Math.abs -128时越界
-            newData[i] = abs < 0 ? AppConstant.LUMP_COUNT : abs;
-            energy += newData[i];
+        if (AppConstant.imageValue) {
+            /***************镜像取值，能量高点在中间***************/
+            int total = AppConstant.LUMP_COUNT / 2;
+            byte[] temp = new byte[total];
+            for (int i = 0; i < total; i++) {
+                abs = (byte) Math.abs(data[total - i]);
+                temp[i] = abs < 0 ? 0 : abs;
+                newData[i] = temp[i];
+                energy += newData[i];
+            }
+            for (int i = 0; i < total; i++) {
+                newData[total + i] = temp[total - 1 - i];
+                energy += newData[i];
+            }
+        } else {
+            /***************顺序取值，能量高点在左侧***************/
+            for (int i = 0; i < AppConstant.LUMP_COUNT; i++) {
+                abs = (byte) Math.abs(data[i]);
+                newData[i] = abs < 0 ? (byte) AppConstant.LUMP_COUNT : abs;
+                energy += newData[i];
+            }
+
         }
+        /**************************************************/
         for (int i = 0; i < onEnergyCallBacks.size(); i++) {
             onEnergyCallBacks.get(i).setWaveData(newData, energy);
         }

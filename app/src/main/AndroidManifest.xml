@@ -46,6 +46,10 @@
             android:screenOrientation="landscape" />
         <activity android:name=".ColorBubbleActivity"
             android:screenOrientation="landscape" />
+        <activity android:name=".AttachmentRingActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".DiffusionRingActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
