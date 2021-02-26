@@ -3,16 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <com.sss.view.WaveRingView
         android:id="@+id/wave"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp" />
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+<LinearLayout
+    android:layout_weight="1"
+    android:layout_width="0dp"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +26,7 @@
             android:id="@+id/checkbox3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+            android:checked="false"
             android:text="基线"
             android:textColor="@color/colorAccent" />
 
@@ -31,19 +34,50 @@
             android:id="@+id/checkbox4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="波纹"
             android:checked="true"
+            android:text="波纹"
             android:textColor="@color/colorAccent" />
 
+        <CheckBox
+            android:id="@+id/checkbox6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="能量点"
+            android:textColor="@color/colorAccent" />
+
+        <CheckBox
+            android:id="@+id/checkbox8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="文字"
+            android:textColor="@color/colorAccent" />
+
+    </RadioGroup>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <CheckBox
             android:id="@+id/checkbox5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="均衡能量强度"
-            android:checked="false"
             android:textColor="@color/colorAccent" />
 
+
+        <CheckBox
+            android:id="@+id/checkbox7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="能量点扩散"
+            android:textColor="@color/colorAccent" />
 
 
     </RadioGroup>
@@ -54,19 +88,42 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <RadioButton
+        <CheckBox
             android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="旋转"
             android:textColor="@color/colorAccent" />
 
-        <RadioButton
+        <CheckBox
             android:id="@+id/checkbox2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:text="随机开始角度"
+            android:textColor="@color/colorAccent" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <CheckBox
+            android:id="@+id/checkbox9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="文字位移"
+            android:textColor="@color/colorAccent" />
+
+        <CheckBox
+            android:id="@+id/checkbox10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="文字随机位移位置"
             android:textColor="@color/colorAccent" />
     </RadioGroup>
 
@@ -78,14 +135,13 @@
         android:textColor="@color/colorAccent"
         android:textSize="15sp" />
 
-
     <SeekBar
         android:id="@+id/seek_bar"
         android:layout_width="match_parent"
         android:layout_height="15dp"
         android:layout_marginTop="10dp"
-        android:max="60"
-        android:progress="10" />
+        android:max="30"
+        android:progress="1" />
 
     <TextView
         android:layout_width="match_parent"
@@ -101,5 +157,40 @@
         android:layout_height="15dp"
         android:layout_marginTop="10dp"
         android:max="200"
-        android:progress="100" />
+        android:progress="150" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="能量点扩散速度设置"
+        android:textColor="@color/colorAccent"
+        android:textSize="15sp" />
+
+    <SeekBar
+        android:id="@+id/seek_bar3"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_marginTop="10dp"
+        android:max="5"
+        android:progress="3" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="文字位移阈值设置"
+        android:textColor="@color/colorAccent"
+        android:textSize="15sp" />
+
+    <SeekBar
+        android:id="@+id/seek_bar4"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_marginTop="10dp"
+        android:max="2000"
+        android:progress="1000" />
+
+</LinearLayout>
+
 </LinearLayout>

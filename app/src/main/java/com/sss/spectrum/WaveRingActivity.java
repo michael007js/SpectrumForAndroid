@@ -20,13 +20,13 @@ public class WaveRingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_wave_ring);
         wave = findViewById(R.id.wave);
         VisualizerHelper.getInstance().addCallBack(wave);
-        ((RadioButton) findViewById(R.id.checkbox)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        ((CheckBox) findViewById(R.id.checkbox)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 wave.setRotate(isChecked);
             }
         });
-        ((RadioButton) findViewById(R.id.checkbox2)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        ((CheckBox) findViewById(R.id.checkbox2)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 wave.setRandom(isChecked);
@@ -48,6 +48,36 @@ public class WaveRingActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 wave.setPowerOffset(isChecked);
+            }
+        });
+        ((CheckBox) findViewById(R.id.checkbox6)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                wave.setPoint(isChecked);
+            }
+        });
+        ((CheckBox) findViewById(R.id.checkbox7)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                wave.setSpread(isChecked);
+            }
+        });
+        ((CheckBox) findViewById(R.id.checkbox8)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                wave.setDrawText(isChecked);
+            }
+        });
+        ((CheckBox) findViewById(R.id.checkbox9)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                wave.setMove(isChecked);
+            }
+        });
+        ((CheckBox) findViewById(R.id.checkbox10)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                wave.setRandomMove(isChecked);
             }
         });
         ((SeekBar) findViewById(R.id.seek_bar)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -79,6 +109,49 @@ public class WaveRingActivity extends AppCompatActivity {
                         return;
                     }
                     wave.setValue(progress);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        ((SeekBar) findViewById(R.id.seek_bar3)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser) {
+                    if (progress == 0) {
+                        return;
+                    }
+                    wave.setSpeed(progress);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        ((SeekBar) findViewById(R.id.seek_bar4)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser) {
+                    if (progress == 0) {
+                        return;
+                    }
+                    wave.setMoveValue(progress);
                 }
             }
 
