@@ -50,6 +50,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".DiffusionRingActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".WaveRingActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.switch_flower).setOnClickListener(this);
         findViewById(R.id.switch_ring).setOnClickListener(this);
         findViewById(R.id.switch_diffusion).setOnClickListener(this);
+        findViewById(R.id.switch_wave).setOnClickListener(this);
 
         player = MediaPlayer.create(MainActivity.this, R.raw.demo);
         player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -135,6 +136,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.switch_diffusion:
                 startActivity(new Intent(this, DiffusionRingActivity.class));
+                break;
+            case R.id.switch_wave:
+                startActivity(new Intent(this, WaveRingActivity.class));
                 break;
             default:
         }
