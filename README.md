@@ -11,6 +11,7 @@
 No picture u say a j8!
 
 少啰嗦，先看效果
+
 ![上帝之环](https://github.com/michael007js/SpectrumForAndroid/blob/master/gif/demo_god_ring.gif "上帝之环")
 ![扩散环](https://github.com/michael007js/SpectrumForAndroid/blob/master/gif/demo_diffusion_ring.gif "扩散环")
 ![仿网易云音乐](https://github.com/michael007js/SpectrumForAndroid/blob/master/gif/demo_attachment_ring.gif "仿网易云音乐")
