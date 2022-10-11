@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.switch_diffusion).setOnClickListener(this);
         findViewById(R.id.switch_wave).setOnClickListener(this);
 
-        player = MediaPlayer.create(MainActivity.this, R.raw.demo);
+        player = MediaPlayer.create(MainActivity.this, R.raw.demo_1);
         player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
