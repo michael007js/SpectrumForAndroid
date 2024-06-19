@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
+
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -61,7 +63,7 @@ public class HorizontalEnergyView extends View implements VisualizerHelper.OnVis
 
 
     @Override
-    public void setWaveData(byte[] data, float totalEnergy) {
+    public void setWaveData(float[] data, float totalEnergy) {
 
         int total = (int) (totalEnergy / (AppConstant.isFFT ? 10 : 100) / 10);
         for (int i = 0; i < list.size(); i++) {

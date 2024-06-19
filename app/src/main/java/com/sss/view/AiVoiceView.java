@@ -92,7 +92,7 @@ public class AiVoiceView extends View implements VisualizerHelper.OnVisualizerEn
     }
 
     @Override
-    public void setWaveData(byte[] data, float totalEnergy) {
+    public void setWaveData(float[] data, float totalEnergy) {
         if (attribute.size() != paths.size()) {
             return;
         }
@@ -115,7 +115,7 @@ public class AiVoiceView extends View implements VisualizerHelper.OnVisualizerEn
         }
     }
 
-    private int getEnergyByPoint(AiVoiceViewBean bean, byte[] data) {
+    private int getEnergyByPoint(AiVoiceViewBean bean, float[] data) {
         int index = (int) (data.length * (bean.end + bean.start) / 2);
         if (index < data.length) {
             return (int) ((Math.abs(Math.abs(data[index])) - 2) * 1.5);

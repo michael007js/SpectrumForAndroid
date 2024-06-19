@@ -2,13 +2,11 @@ package com.sss.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Shader;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.sss.VisualizerHelper;
@@ -53,8 +51,8 @@ public class ColumnarView extends View implements VisualizerHelper.OnVisualizerE
     }
 
     @Override
-    public void setWaveData(byte[] data, float totalEnergy) {
-        width = getWidth() / AppConstant.LUMP_COUNT;
+    public void setWaveData(float[] data, float totalEnergy) {
+        width = getWidth() / AppConstant.SAMPLE_SIZE;
 //        paint.setColor(AppConstant.COLOR);
         if (newData.size() > 0) {
             if (blockData.size() == 0 || newData.size() != blockData.size()) {
@@ -89,7 +87,7 @@ public class ColumnarView extends View implements VisualizerHelper.OnVisualizerE
             } else {
                 rect.left = newData.get(newData.size() - 1).right + spacing;
             }
-            rect.top = getHeight() - data[i] * AppConstant.LAGER_OFFSET;
+            rect.top = (int) (getHeight() - data[i] * AppConstant.LAGER_OFFSET);
             rect.right = rect.left + width-spacing;
             rect.bottom = getHeight();
             newData.add(rect);

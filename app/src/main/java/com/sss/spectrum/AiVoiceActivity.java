@@ -1,12 +1,12 @@
 package com.sss.spectrum;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
 import com.sss.VisualizerHelper;
 import com.sss.view.AiVoiceView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import cn.bar.DoubleHeadedDragonBar;
 
 public class AiVoiceActivity extends AppCompatActivity {
@@ -32,21 +32,21 @@ public class AiVoiceActivity extends AppCompatActivity {
             @Override
             public void onEndTouch(float minPercentage, float maxPercentage) {
                 super.onEndTouch(minPercentage, maxPercentage);
-                aiVoiceView.setParameter(0,minPercentage/100, maxPercentage/100);
+                aiVoiceView.setParameter(0, minPercentage / 100, maxPercentage / 100);
             }
         });
         bar2.setCallBack(new DoubleHeadedDragonBar.DhdBarCallBack() {
             @Override
             public void onEndTouch(float minPercentage, float maxPercentage) {
                 super.onEndTouch(minPercentage, maxPercentage);
-                aiVoiceView.setParameter(1,minPercentage/100, maxPercentage/100);
+                aiVoiceView.setParameter(1, minPercentage / 100, maxPercentage / 100);
             }
         });
         bar3.setCallBack(new DoubleHeadedDragonBar.DhdBarCallBack() {
             @Override
             public void onEndTouch(float minPercentage, float maxPercentage) {
                 super.onEndTouch(minPercentage, maxPercentage);
-                aiVoiceView.setParameter(2,minPercentage/100, maxPercentage/100);
+                aiVoiceView.setParameter(2, minPercentage / 100, maxPercentage / 100);
             }
         });
     }

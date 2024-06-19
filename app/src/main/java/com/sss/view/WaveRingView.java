@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.SweepGradient;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
+
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -189,7 +191,7 @@ public class WaveRingView extends View implements VisualizerHelper.OnVisualizerE
     private SweepGradient sweepGradient;
 
     @Override
-    public void setWaveData(byte[] data, float totalEnergy) {
+    public void setWaveData(float[] data, float totalEnergy) {
         int total = data.length - value;
         //圆点基准位置半径
         float basePoint = radius + value - distance;
@@ -227,10 +229,10 @@ public class WaveRingView extends View implements VisualizerHelper.OnVisualizerE
             //每个能量在圆环上的角度位置
             float positionAngle = i * 1.0f / total * 360;
             //每个能量的强度百分比
-            powerPercent = isPowerOffset ? 0f : data[i] * 1.0f / AppConstant.LUMP_COUNT;
+            powerPercent = isPowerOffset ? 0f : data[i] * 1.0f / AppConstant.SAMPLE_SIZE;
             WaveRingViewBean waveRingViewBean = new WaveRingViewBean();
             waveRingViewBean.angle = positionAngle + (isRotate ? degress : getRandomAngle());
-            waveRingViewBean.powerPercent = data[i] * 1.0f / AppConstant.LUMP_COUNT;
+            waveRingViewBean.powerPercent = data[i] * 1.0f / AppConstant.SAMPLE_SIZE;
             if (data[i] > scope) {
                 waveRingViewBean.radius = basePoint - data[i] - powerPercent * data[i] - (Utils.dp2px(distance) * powerPercent);
                 Utils.calcPoint(centerPoint.x, centerPoint.y, (int) (radius + data[i]) + value, waveRingViewBean.angle, waveRingViewBean.inner);
@@ -338,7 +340,7 @@ public class WaveRingView extends View implements VisualizerHelper.OnVisualizerE
     /**
      * 获取最强能量位置
      */
-    private int getStrongPowerPosition(byte[] data) {
+    private int getStrongPowerPosition(float[] data) {
         int power = 0;
         int position = -1;
         for (int i = 0; i < list.size(); i++) {

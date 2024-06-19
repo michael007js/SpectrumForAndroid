@@ -1,7 +1,9 @@
 package com.sss;
 
-import android.media.audiofx.Visualizer;
+import android.os.Handler;
+import android.os.Looper;
 
+import com.sss.processor.FFTListener;
 import com.sss.spectrum.AppConstant;
 
 import java.util.ArrayList;
@@ -22,61 +24,44 @@ public class VisualizerHelper {
     }
 
     private List<OnVisualizerEnergyCallBack> onEnergyCallBacks = new ArrayList<>();
-    private final Visualizer.OnDataCaptureListener dataCaptureListener = new Visualizer.OnDataCaptureListener() {
+
+    private final FFTListener fftListener = new FFTListener() {
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        float[] fft;
+        float energy;
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < onEnergyCallBacks.size(); i++) {
+                    if (!onEnergyCallBacks.isEmpty() && i <= onEnergyCallBacks.size() - 1) {
+                        onEnergyCallBacks.get(i).setWaveData(fft, energy);
+                    }
+                }
+            }
+        };
 
         @Override
-        public void onWaveFormDataCapture(Visualizer visualizer, final byte[] fft, int samplingRate) {
-            if (!AppConstant.isFFT) {
-                dispose(fft);
-            }
-        }
+        public void onFFTReady(int sampleRateHz, int channelCount, float[] fft) {
 
-        @Override
-        public void onFftDataCapture(Visualizer visualizer, final byte[] fft, int samplingRate) {
-            if (AppConstant.isFFT) {
-                dispose(fft);
-            }
-        }
 
+            float energy = 0f;
+            int size = Math.min(fft.length, AppConstant.SAMPLE_SIZE);
+            float[] newData = new float[size];
+            for (int i = 0; i < size; i++) {
+                //TODO 注意：这里取正数，如果绘制波形图，则不需要取正，后期如果加入波形类频谱则需要对此处改造
+                float value = Math.max(0, fft[i]) * AppConstant.LAGER_OFFSET;
+                energy += value;
+                newData[i] = value;
+            }
+            this.fft = newData;
+            this.energy = energy;
+            mainHandler.post(runnable);
+        }
     };
 
-    public Visualizer.OnDataCaptureListener getDataCaptureListener() {
-        return dataCaptureListener;
+    public FFTListener getFftListener() {
+        return fftListener;
     }
-
-    private void dispose(byte[] data) {
-        float energy = 0f;
-        byte[] newData = new byte[AppConstant.LUMP_COUNT];
-        byte abs;
-        if (AppConstant.imageValue) {
-            /***************镜像取值，能量高点在中间***************/
-            int total = AppConstant.LUMP_COUNT / 2;
-            byte[] temp = new byte[total];
-            for (int i = 0; i < total; i++) {
-                abs = (byte) Math.abs(data[total - i]);
-                temp[i] = abs < 0 ? 0 : abs;
-                newData[i] = temp[i];
-                energy += newData[i];
-            }
-            for (int i = 0; i < total; i++) {
-                newData[total + i] = temp[total - 1 - i];
-                energy += newData[i];
-            }
-        } else {
-            /***************顺序取值，能量高点在左侧***************/
-            for (int i = 0; i < AppConstant.LUMP_COUNT; i++) {
-                abs = (byte) Math.abs(data[i]);
-                newData[i] = abs < 0 ? (byte) AppConstant.LUMP_COUNT : abs;
-                energy += newData[i];
-            }
-
-        }
-        /**************************************************/
-        for (int i = 0; i < onEnergyCallBacks.size(); i++) {
-            onEnergyCallBacks.get(i).setWaveData(newData, energy);
-        }
-    }
-
 
     public void addCallBack(OnVisualizerEnergyCallBack onEnergyCallBack) {
         onEnergyCallBacks.add(onEnergyCallBack);
@@ -88,7 +73,7 @@ public class VisualizerHelper {
 
     public interface OnVisualizerEnergyCallBack {
 
-        void setWaveData(byte[] data, float totalEnergy);
+        void setWaveData(float[] data, float totalEnergy);
 
     }
 }

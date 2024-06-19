@@ -62,7 +62,7 @@ public class SlipBallView extends View implements VisualizerHelper.OnVisualizerE
 
 
     @Override
-    public void setWaveData(byte[] data, float totalEnergy) {
+    public void setWaveData(float[] data, float totalEnergy) {
         slipBallBean.offset = (int) (totalEnergy / (AppConstant.isFFT ? 100 : 1000));
         invalidate();
     }

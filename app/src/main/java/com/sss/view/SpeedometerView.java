@@ -62,7 +62,7 @@ public class SpeedometerView extends View implements VisualizerHelper.OnVisualiz
     private float totalEnergy;
 
     @Override
-    public void setWaveData(byte[] data, float totalEnergy) {
+    public void setWaveData(float[] data, float totalEnergy) {
         this.totalEnergy = totalEnergy;
 
         angle = totalEnergy / (AppConstant.isFFT ? 10 : 100);

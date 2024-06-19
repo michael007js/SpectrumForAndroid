@@ -1,8 +1,9 @@
 package com.sss.spectrum;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.Nullable;
+
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
@@ -10,6 +11,8 @@ import android.widget.SeekBar;
 
 import com.sss.VisualizerHelper;
 import com.sss.view.AttachmentRingView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AttachmentRingActivity extends AppCompatActivity {
     private AttachmentRingView ring;

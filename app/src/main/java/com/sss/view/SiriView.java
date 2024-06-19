@@ -9,7 +9,9 @@ import android.graphics.PathMeasure;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
+
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -78,23 +80,23 @@ public class SiriView extends View implements VisualizerHelper.OnVisualizerEnerg
     }
 
     @Override
-    public void setWaveData(byte[] data, float totalEnergy) {
+    public void setWaveData(float[] data, float totalEnergy) {
         for (int i = 0; i < attribute.size(); i++) {
             pointFList.get(0).x = 0;
             pointFList.get(0).y = defultY;
-            pointFList.get(1).x = (int) (attribute.get(i).leftDistance * getWidth()) + Math.abs(getData(data, i));
+            pointFList.get(1).x = (int) ((int) (attribute.get(i).leftDistance * getWidth()) + Math.abs(getData(data, i)));
             pointFList.get(1).y = defultY;
             pointFList.get(2).x = (int) ((attribute.get(i).rightDistance + attribute.get(i).leftDistance) / 2 * getWidth());
             pointFList.get(2).y = (int) (defultY - defultY * attribute.get(i).heightPercent - Math.abs(getData(data, i)));
-            pointFList.get(3).x = (int) (attribute.get(i).rightDistance * getWidth()) - Math.abs(getData(data, i));
+            pointFList.get(3).x = (int) ((int) (attribute.get(i).rightDistance * getWidth()) - Math.abs(getData(data, i)));
             pointFList.get(3).y = defultY;
             pointFList.get(4).x = getWidth();
             pointFList.get(4).y = defultY;
-            pointFList.get(5).x = (int) (attribute.get(i).rightDistance * getWidth()) - Math.abs(getData(data, i));
+            pointFList.get(5).x = (int) ((int) (attribute.get(i).rightDistance * getWidth()) - Math.abs(getData(data, i)));
             pointFList.get(5).y = defultY;
             pointFList.get(6).x = (int) ((attribute.get(i).rightDistance + attribute.get(i).leftDistance) / 2 * getWidth());
             pointFList.get(6).y = (int) (defultY + defultY * attribute.get(i).heightPercent + Math.abs(getData(data, i)));
-            pointFList.get(7).x = (int) (attribute.get(i).leftDistance * getWidth()) + Math.abs(getData(data, i));
+            pointFList.get(7).x = (int) ((int) (attribute.get(i).leftDistance * getWidth()) + Math.abs(getData(data, i)));
             pointFList.get(7).y = defultY;
             pointFList.get(8).x = 0;
             pointFList.get(8).y = defultY;
@@ -102,7 +104,7 @@ public class SiriView extends View implements VisualizerHelper.OnVisualizerEnerg
         }
     }
 
-    private byte getData(byte[] data, int index) {
+    private float getData(float[] data, int index) {
 //        if (true){
 //            return 100;
 //        }

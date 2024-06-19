@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +17,8 @@ import com.sss.spectrum.AppConstant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import androidx.annotation.Nullable;
 
 public class ColorBubbleView extends View implements VisualizerHelper.OnVisualizerEnergyCallBack {
     private Point centerPoint = new Point();
@@ -75,7 +76,7 @@ public class ColorBubbleView extends View implements VisualizerHelper.OnVisualiz
     }
 
     @Override
-    public void setWaveData(byte[] data, float totalEnergy) {
+    public void setWaveData(float[] data, float totalEnergy) {
         distance = Math.min(totalEnergy / amplitude, getWidth() / 2);
 //        distance = totalEnergy / amplitude;
         percent = distance * 1.0f / centerPoint.x;

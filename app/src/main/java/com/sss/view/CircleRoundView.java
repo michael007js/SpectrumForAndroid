@@ -61,7 +61,7 @@ public class CircleRoundView extends View implements VisualizerHelper.OnVisualiz
     }
 
     @Override
-    public void setWaveData(byte[] data, float totalEnergy) {
+    public void setWaveData(float[] data, float totalEnergy) {
         energy = totalEnergy;
 //        Log.e("SSSSS", energy + "");
         if (energy > energyEnable) {

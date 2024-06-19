@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -16,6 +15,8 @@ import com.sss.spectrum.AppConstant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import androidx.annotation.Nullable;
 
 @SuppressWarnings("ALL")
 public class AttachmentRingView extends View implements VisualizerHelper.OnVisualizerEnergyCallBack {
@@ -96,7 +97,7 @@ public class AttachmentRingView extends View implements VisualizerHelper.OnVisua
     }
 
     @Override
-    public void setWaveData(byte[] data, float totalEnergy) {
+    public void setWaveData(float[] data, float totalEnergy) {
         list.clear();
         int total = data.length - scope;
         //圆周长

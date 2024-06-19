@@ -3,52 +3,69 @@ package com.sss.spectrum;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.AudioFormat;
-import android.media.AudioRecord;
-import android.media.MediaPlayer;
-import android.media.MediaRecorder;
-import android.media.audiofx.Visualizer;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.Renderer;
+import com.google.android.exoplayer2.RenderersFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.audio.AudioCapabilities;
+import com.google.android.exoplayer2.audio.AudioProcessor;
+import com.google.android.exoplayer2.audio.AudioRendererEventListener;
+import com.google.android.exoplayer2.audio.DefaultAudioSink;
+import com.google.android.exoplayer2.audio.MediaCodecAudioRenderer;
+import com.google.android.exoplayer2.mediacodec.MediaCodecSelector;
+import com.google.android.exoplayer2.metadata.MetadataOutput;
+import com.google.android.exoplayer2.text.TextOutput;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.upstream.RawResourceDataSource;
+import com.google.android.exoplayer2.video.VideoRendererEventListener;
 import com.sss.VisualizerHelper;
+import com.sss.processor.FFTAudioProcessor;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private Visualizer visualizer;
-    private MediaPlayer player;
-    private static final int PERM_REQ_CODE = 23;
+    private ExoPlayer player;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, PERM_REQ_CODE);
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    0x001A);
+
+            // 可以在onRequestPermissionsResult() 回调中处理权限被授予后的操作
         } else {
-            // 已经有权限，继续执行初始化
             okey();
         }
 
     }
 
-    // 请求权限结果的回调
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERM_REQ_CODE) {
+        if (requestCode == 0x001A) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // 权限被授予，继续执行初始化
                 okey();
             } else {
-                // 权限被拒绝
-                Toast.makeText(this, "录音权限被拒绝", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "请授予读取权限", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -72,34 +89,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.switch_diffusion).setOnClickListener(this);
         findViewById(R.id.switch_wave).setOnClickListener(this);
 
-        player = MediaPlayer.create(MainActivity.this, R.raw.demo_1);
-        player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.start();
-            }
-        });
-        player.setLooping(true);
-        player.start();
 
-        try {
-            int mediaPlayerId = player.getAudioSessionId();
-            if (visualizer == null) {
-                visualizer = new Visualizer(mediaPlayerId);
-            } else {
-                visualizer.release();
-            }
-            //可视化数据的大小： getCaptureSizeRange()[0]为最小值，getCaptureSizeRange()[1]为最大值
-            int captureSize = Visualizer.getCaptureSizeRange()[1];
-            int captureRate = Visualizer.getMaxCaptureRate() * 3 / 4;
+        play();
+    }
 
-            visualizer.setCaptureSize(captureSize);
-            visualizer.setDataCaptureListener(VisualizerHelper.getInstance().getDataCaptureListener(), captureRate, true, true);
-            visualizer.setScalingMode(Visualizer.SCALING_MODE_NORMALIZED);
-            visualizer.setEnabled(true);
-        } catch (Exception e) {
-            e.printStackTrace();
+    void play() {
+        if (player == null) {
+            FFTAudioProcessor fftAudioProcessor = new FFTAudioProcessor();
+            fftAudioProcessor.setFftListener(VisualizerHelper.getInstance().getFftListener());
+            AudioProcessor[] audioProcessors = new AudioProcessor[]{fftAudioProcessor};
+            player = new SimpleExoPlayer.Builder(MainActivity.this, new RenderersFactory() {
+                @Override
+                public Renderer[] createRenderers(Handler eventHandler, VideoRendererEventListener videoRendererEventListener, AudioRendererEventListener audioRendererEventListener, TextOutput textRendererOutput, MetadataOutput metadataRendererOutput) {
+                    MediaCodecAudioRenderer audioRenderer = new MediaCodecAudioRenderer(
+                            MainActivity.this,
+                            MediaCodecSelector.DEFAULT,
+                            eventHandler,
+                            audioRendererEventListener,
+                            new DefaultAudioSink(AudioCapabilities.getCapabilities(MainActivity.this), audioProcessors)
+                    );
+                    return new Renderer[]{audioRenderer};
+                }
+            })
+                    .setTrackSelector(new DefaultTrackSelector(MainActivity.this))
+                    .build();
+            player.addListener(new Player.Listener() {
+                @Override
+                public void onPlaybackStateChanged(int playbackState) {
+                    if (playbackState == Player.STATE_ENDED) {
+                        play();
+                    }
+                }
+            });
         }
+        Uri uri = RawResourceDataSource.buildRawResourceUri(R.raw.demo);
+        MediaItem mediaItem = MediaItem.fromUri(uri);
+        player.setMediaItem(mediaItem);
+        player.prepare();
+        player.play();
     }
 
 

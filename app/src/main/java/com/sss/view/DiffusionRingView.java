@@ -6,8 +6,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -61,7 +62,7 @@ public class DiffusionRingView extends View implements VisualizerHelper.OnVisual
     }
 
     @Override
-    public void setWaveData(byte[] data, float totalEnergy) {
+    public void setWaveData(float[] data, float totalEnergy) {
         for (int i = 0; i < list.size(); i++) {
             if (!list.get(i).enable) {
                 list.remove(i);

@@ -58,10 +58,10 @@ public class GridPointView extends View implements VisualizerHelper.OnVisualizer
 
 
     @Override
-    public void setWaveData(byte[] data, float totalEnergy) {
+    public void setWaveData(float[] data, float totalEnergy) {
 //        Log.e("SSSSS",energy+"");
         showList.clear();
-        if (rectList.size()>1) {
+        if (rectList.size() > 1) {
             for (int i = 0; i < totalEnergy / (AppConstant.isFFT ? 100 : 1000); i++) {
                 showList.add(rectList.get(random.nextInt(rectList.size() - 1)));
             }

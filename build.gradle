@@ -22,7 +22,110 @@ allprojects {
         maven { url 'https://www.jitpack.io' }
     }
 }
+subprojects {
+    project.configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'androidx.appcompat'
+                    && details.requested.name == 'appcompat') {
+                details.useVersion "1.2.0"
+            }
 
+            if (details.requested.group == 'androidx.activity'
+                    && details.requested.name == 'activity') {
+                details.useVersion "1.1.0"
+            }
+
+            if (details.requested.group == 'androidx.annotation'
+                    && details.requested.name == 'annotation') {
+                details.useVersion "1.1.0"
+            }
+
+            if (details.requested.group == 'androidx.arch.core'
+                    && details.requested.name == 'core-common') {
+                details.useVersion "2.1.0"
+            }
+
+            if (details.requested.group == 'androidx.arch.core'
+                    && details.requested.name == 'core-runtime') {
+                details.useVersion "2.1.0"
+            }
+
+            if (details.requested.group == 'androidx.collection'
+                    && details.requested.name == 'collection') {
+                details.useVersion "1.1.0"
+            }
+
+            if (details.requested.group == 'androidx.core'
+                    && details.requested.name == 'core') {
+                details.useVersion "1.10.1"
+            }
+
+            if (details.requested.group == 'androidx.coordinatorlayout'
+                    && details.requested.name == 'coordinatorlayout') {
+                details.useVersion "1.1.0"
+            }
+
+            if (details.requested.group == 'androidx.fragmen'
+                    && details.requested.name == 'fragment') {
+                details.useVersion "1.2.0"
+            }
+
+            if (details.requested.group == 'androidx.lifecycle'
+                    && details.requested.name == 'lifecycle-common') {
+                details.useVersion "2.2.0"
+            }
+
+            if (details.requested.group == 'androidx.lifecycle'
+                    && details.requested.name == 'lifecycle-livedata') {
+                details.useVersion "2.2.0"
+            }
+
+            if (details.requested.group == 'androidx.lifecycle'
+                    && details.requested.name == 'lifecycle-livedata-core') {
+                details.useVersion "2.2.0"
+            }
+
+            if (details.requested.group == 'androidx.lifecycle'
+                    && details.requested.name == 'lifecycle-runtime') {
+                details.useVersion "2.2.0"
+            }
+
+            if (details.requested.group == 'androidx.lifecycle'
+                    && details.requested.name == 'lifecycle-viewmodel') {
+                details.useVersion "2.2.0"
+            }
+
+            if (details.requested.group == 'androidx.lifecycle'
+                    && details.requested.name == 'lifecycle-viewmodel-savedstate') {
+                details.useVersion "2.2.0"
+            }
+
+            if (details.requested.group == 'androidx.vectordrawable'
+                    && details.requested.name == 'vectordrawable-animated') {
+                details.useVersion "1.1.0"
+            }
+
+            if (details.requested.group == 'com.squareup.okio'
+                    && details.requested.name == 'okio') {
+                details.useVersion "2.5.0"
+            }
+
+            if (details.requested.group == 'com.squareup.okhttp3'
+                    && details.requested.name == 'okhttp') {
+                details.useVersion "4.5.0"
+            }
+
+            if (details.requested.group == 'com.squareup.retrofit2'
+                    && details.requested.name == 'retrofit') {
+                details.useVersion "2.9.0"
+            }
+
+            if ((requested.group == "org.jetbrains.kotlin") && (requested.name.startsWith("kotlin-stdlib"))) {
+                useVersion("1.6.0")
+            }
+        }
+    }
+}
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

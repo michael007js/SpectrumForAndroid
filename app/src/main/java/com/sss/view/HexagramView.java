@@ -86,7 +86,7 @@ public class HexagramView extends View implements VisualizerHelper.OnVisualizerE
 
 
     @Override
-    public void setWaveData(byte[] data, float totalEnergy) {
+    public void setWaveData(float[] data, float totalEnergy) {
         energy = totalEnergy;
         calcHexagramPoint(innerPoints, (int) (radiusInner * energy / (AppConstant.isFFT ? 10000 : 100000)), energy);
         invalidate();
@@ -97,7 +97,7 @@ public class HexagramView extends View implements VisualizerHelper.OnVisualizerE
         super.onDraw(canvas);
         drawHexagram(canvas, radiusInner, innerPoints);
         angle = angle > 359.9 ? 0 : angle + 1;
-        canvas.rotate(angle,centerX,centerY);
+        canvas.rotate(angle, centerX, centerY);
         drawHexagram(canvas, radiusOutter, outterPoints);
     }
 
@@ -112,15 +112,15 @@ public class HexagramView extends View implements VisualizerHelper.OnVisualizerE
         if (list.size() != 6) {
             return;
         }
-        if (list==outterPoints){
+        if (list == outterPoints) {
             paint.setColor(Color.argb(
-                    Utils.randomInt(random, (int) (AppConstant.RED * (energy /  (AppConstant.isFFT ? 10000 : 100000))), AppConstant.ALPHA),
-                    Utils.randomInt(random, (int) (AppConstant.RED * (energy /  (AppConstant.isFFT ? 10000 : 100000))), AppConstant.RED),
-                    Utils.randomInt(random, (int) (AppConstant.RED * (energy /  (AppConstant.isFFT ? 10000 : 100000))), AppConstant.GREEN),
-                    Utils.randomInt(random, (int) (AppConstant.RED * (energy /  (AppConstant.isFFT ? 10000 : 100000))), AppConstant.BLUE)
+                            Utils.randomInt(random, (int) (AppConstant.RED * (energy / (AppConstant.isFFT ? 10000 : 100000))), AppConstant.ALPHA),
+                            Utils.randomInt(random, (int) (AppConstant.RED * (energy / (AppConstant.isFFT ? 10000 : 100000))), AppConstant.RED),
+                            Utils.randomInt(random, (int) (AppConstant.RED * (energy / (AppConstant.isFFT ? 10000 : 100000))), AppConstant.GREEN),
+                            Utils.randomInt(random, (int) (AppConstant.RED * (energy / (AppConstant.isFFT ? 10000 : 100000))), AppConstant.BLUE)
                     )
             );
-        }else {
+        } else {
             paint.setColor(AppConstant.COLOR);
         }
         canvas.drawCircle(centerX, centerY, radius, paint);

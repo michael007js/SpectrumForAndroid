@@ -14,9 +14,9 @@
         android:orientation="horizontal">
 
         <TextView
-            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="顺序算法\n（能量高点在左侧）"
             android:textColor="@color/colorAccent" />
 
@@ -30,15 +30,15 @@
             android:textColor="@color/colorAccent" />
 
         <TextView
-            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="镜像算法\n（能量高点在中间）"
             android:textColor="@color/colorAccent" />
 
     </LinearLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -180,5 +180,5 @@
                 android:textColor="@color/colorAccent" />
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

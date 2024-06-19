@@ -91,7 +91,7 @@ public class RotatingCircleView extends View implements VisualizerHelper.OnVisua
     }
 
     @Override
-    public void setWaveData(byte[] data, float totalEnergy) {
+    public void setWaveData(float[] data, float totalEnergy) {
 
         if (bitmap != null) {
             energyPercent = totalEnergy / (AppConstant.isFFT ? 100f : 1000f);

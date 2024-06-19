@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Shader;
 import android.util.AttributeSet;
@@ -60,12 +59,12 @@ public class BesselView extends View implements VisualizerHelper.OnVisualizerEne
         super.onSizeChanged(w, h, oldw, oldh);
         centerX = w / 2;
         centerY = h;
-        spacing = w / AppConstant.LUMP_COUNT;
+        spacing = w / AppConstant.SAMPLE_SIZE;
         paint.setShader(new LinearGradient(0f, 0f, getWidth(), getHeight(), new int[]{0xffff0000, 0xffaaaa00, 0xffffff00}, new float[]{0, 0.5f, 1f}, Shader.TileMode.CLAMP));
     }
 
     @Override
-    public void setWaveData(byte[] data, float totalEnergy) {
+    public void setWaveData(float[] data, float totalEnergy) {
         paint.setColor(Color.WHITE);
         list.clear();
         for (int i = 0; i < data.length; i++) {

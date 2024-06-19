@@ -21,7 +21,7 @@ public class WaveformView extends View implements VisualizerHelper.OnVisualizerE
     private int defultY;
     //每一个波形点之间的间距
     private int spacing = 5;
-    private int offset=0;
+    private int offset = 0;
 
     public void setOffset(int offset) {
         this.offset = offset;
@@ -45,11 +45,11 @@ public class WaveformView extends View implements VisualizerHelper.OnVisualizerE
     }
 
     @Override
-    public void setWaveData(byte[] data, float totalEnergy) {
+    public void setWaveData(float[] data, float totalEnergy) {
 
         paint.setStrokeWidth(3);
         paint.setColor(AppConstant.COLOR);
-        spacing = getWidth() / AppConstant.LUMP_COUNT+offset;
+        spacing = getWidth() / AppConstant.SAMPLE_SIZE + offset;
         defultY = getHeight() / 2;
         newData.clear();
         for (int i = 0; i < data.length; i++) {
@@ -61,11 +61,11 @@ public class WaveformView extends View implements VisualizerHelper.OnVisualizerE
         }
     }
 
-    private int getOffsetY(int i, int data) {
+    private int getOffsetY(int i, float data) {
         if (i % 2 == 0) {
-            return data * AppConstant.LAGER_OFFSET;
+            return (int) (data * AppConstant.LAGER_OFFSET);
         } else {
-            return -data * AppConstant.LAGER_OFFSET;
+            return (int) (-data * AppConstant.LAGER_OFFSET);
         }
     }
 
