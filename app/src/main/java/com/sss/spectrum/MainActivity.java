@@ -1,6 +1,5 @@
 package com.sss.spectrum;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -32,8 +31,6 @@ import com.sss.processor.FFTAudioProcessor;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private ExoPlayer player;
@@ -43,18 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    0x001A);
-
-            // 可以在onRequestPermissionsResult() 回调中处理权限被授予后的操作
-        } else {
-            okey();
-        }
+        okey();
 
     }
 
@@ -71,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void okey() {
-        findViewById(R.id.switch_button).setOnClickListener(this);
         findViewById(R.id.switch_horizontal_energy).setOnClickListener(this);
         findViewById(R.id.switch_ai_voice).setOnClickListener(this);
         findViewById(R.id.switch_siri).setOnClickListener(this);
@@ -133,9 +118,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.switch_button:
-                AppConstant.imageValue = ((Switch) findViewById(R.id.switch_button)).isChecked();
-                break;
             case R.id.switch_horizontal_energy:
                 startActivity(new Intent(this, HorizontalEnergyActivity.class));
                 break;
