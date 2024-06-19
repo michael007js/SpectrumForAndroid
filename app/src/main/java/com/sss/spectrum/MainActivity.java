@@ -1,43 +1,56 @@
 package com.sss.spectrum;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.media.AudioFormat;
+import android.media.AudioRecord;
 import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Switch;
+import android.widget.Toast;
 
-import com.hjq.permissions.OnPermission;
-import com.hjq.permissions.XXPermissions;
 import com.sss.VisualizerHelper;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Visualizer visualizer;
     private MediaPlayer player;
-
+    private static final int PERM_REQ_CODE = 23;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        XXPermissions.with(this)
-                .permission("android.permission.RECORD_AUDIO")
-                .request(new OnPermission() {
-                    @Override
-                    public void hasPermission(List<String> granted, boolean isAll) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, PERM_REQ_CODE);
+        } else {
+            // 已经有权限，继续执行初始化
+            okey();
+        }
 
-                        okey();
+    }
 
-                    }
-
-                    @Override
-                    public void noPermission(List<String> denied, boolean quick) {
-
-                    }
-                });
+    // 请求权限结果的回调
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERM_REQ_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 权限被授予，继续执行初始化
+                okey();
+            } else {
+                // 权限被拒绝
+                Toast.makeText(this, "录音权限被拒绝", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void okey() {
@@ -59,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.switch_diffusion).setOnClickListener(this);
         findViewById(R.id.switch_wave).setOnClickListener(this);
 
-        player = MediaPlayer.create(MainActivity.this, R.raw.demo);
+        player = MediaPlayer.create(MainActivity.this, R.raw.demo_1);
         player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
@@ -69,20 +82,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         player.setLooping(true);
         player.start();
 
-        int mediaPlayerId = player.getAudioSessionId();
-        if (visualizer == null) {
-            visualizer = new Visualizer(mediaPlayerId);
-        } else {
-            visualizer.release();
-        }
-        //可视化数据的大小： getCaptureSizeRange()[0]为最小值，getCaptureSizeRange()[1]为最大值
-        int captureSize = Visualizer.getCaptureSizeRange()[1];
-        int captureRate = Visualizer.getMaxCaptureRate() * 3 / 4;
+        try {
+            int mediaPlayerId = player.getAudioSessionId();
+            if (visualizer == null) {
+                visualizer = new Visualizer(mediaPlayerId);
+            } else {
+                visualizer.release();
+            }
+            //可视化数据的大小： getCaptureSizeRange()[0]为最小值，getCaptureSizeRange()[1]为最大值
+            int captureSize = Visualizer.getCaptureSizeRange()[1];
+            int captureRate = Visualizer.getMaxCaptureRate() * 3 / 4;
 
-        visualizer.setCaptureSize(captureSize);
-        visualizer.setDataCaptureListener(VisualizerHelper.getInstance().getDataCaptureListener(), captureRate, true, true);
-        visualizer.setScalingMode(Visualizer.SCALING_MODE_NORMALIZED);
-        visualizer.setEnabled(true);
+            visualizer.setCaptureSize(captureSize);
+            visualizer.setDataCaptureListener(VisualizerHelper.getInstance().getDataCaptureListener(), captureRate, true, true);
+            visualizer.setScalingMode(Visualizer.SCALING_MODE_NORMALIZED);
+            visualizer.setEnabled(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
