@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.exoplayer2.ExoPlayer;
@@ -63,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.switch_slip_ball).setOnClickListener(this);
         findViewById(R.id.switch_hexagram_view).setOnClickListener(this);
         findViewById(R.id.switch_columnar).setOnClickListener(this);
+        findViewById(R.id.switch_kugou_column).setOnClickListener(this);
         findViewById(R.id.switch_bessel).setOnClickListener(this);
         findViewById(R.id.switch_waveform).setOnClickListener(this);
         findViewById(R.id.switch_circle_round).setOnClickListener(this);
@@ -135,6 +135,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.switch_columnar:
                 startActivity(new Intent(this, ColumnarActivity.class));
+                break;
+            case R.id.switch_kugou_column:
+                startActivity(new Intent(this, KugouColumnActivity.class));
                 break;
             case R.id.switch_bessel:
                 startActivity(new Intent(this, BesselActivity.class));

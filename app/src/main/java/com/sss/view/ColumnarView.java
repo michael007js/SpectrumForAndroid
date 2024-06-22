@@ -9,8 +9,8 @@ import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.sss.Utils;
 import com.sss.VisualizerHelper;
-import com.sss.spectrum.AppConstant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,17 +22,15 @@ public class ColumnarView extends View implements VisualizerHelper.OnVisualizerE
     //每一个能量柱的宽度
     private int width;
     //每一个能量柱之间的间距
-    private int spacing = 1;
-    //能量块高度
-    private int blockHeight = 5;
-    //能量块下将速度
-    private int blockSpeed = 3;
+    private final int spacing = Utils.dp2px(1);
+    private int blockSpeed = Utils.dp2px(1f);
     //能量块与能量柱之间的距离
-    private int distance = 2;
+    private final int distance = Utils.dp2px(1);
 
-    private Paint paint = new Paint();
-    private List<Rect> newData = new ArrayList<>();
-    private List<Rect> blockData = new ArrayList<>();
+    private final Paint paint = new Paint();
+    private final List<Rect> newData = new ArrayList<>();
+    private final List<Rect> blockData = new ArrayList<>();
+    private int compensate;
 
     public void setBlockSpeed(int blockSpeed) {
         this.blockSpeed = blockSpeed;
@@ -52,23 +50,32 @@ public class ColumnarView extends View implements VisualizerHelper.OnVisualizerE
 
     @Override
     public void setWaveData(float[] data, float totalEnergy) {
-        width = getWidth() / AppConstant.SAMPLE_SIZE;
 //        paint.setColor(AppConstant.COLOR);
-        if (newData.size() > 0) {
-            if (blockData.size() == 0 || newData.size() != blockData.size()) {
+        int h = getHeight();
+        if (newData.isEmpty()) {
+            for (float f : data) {
+                newData.add(new Rect());
+            }
+        }
+        if (!newData.isEmpty() && h > 0) {
+            // 确保width的计算考虑spacing并适应视图宽度
+            int totalSpacing = (data.length - 1) * spacing;
+            width = (getWidth() - totalSpacing) / data.length;
+            //能量块高度
+            int blockHeight = width / 2;
+            if (blockData.isEmpty() || newData.size() != blockData.size()) {
                 blockData.clear();
                 for (int i = 0; i < data.length; i++) {
                     Rect rect = new Rect();
-                    rect.top = getHeight() - blockHeight;
-                    rect.bottom = getHeight();
+                    rect.top = h - blockHeight;
+                    rect.bottom = h;
                     blockData.add(rect);
                 }
             }
             for (int i = 0; i < blockData.size(); i++) {
                 blockData.get(i).left = newData.get(i).left;
                 blockData.get(i).right = newData.get(i).right;
-//                Log.e("SSSSS", newData.get(i).top + "---" + blockData.get(i).top);
-                if (newData.get(i).top < blockData.get(i).top) {
+                if (newData.get(i).top > 0 && newData.get(i).top < blockData.get(i).top) {
                     blockData.get(i).top = newData.get(i).top - blockHeight - distance;
                 } else {
                     blockData.get(i).top = blockData.get(i).top + blockSpeed;
@@ -78,21 +85,22 @@ public class ColumnarView extends View implements VisualizerHelper.OnVisualizerE
 
             }
         }
-
-        newData.clear();
         for (int i = 0; i < data.length; i++) {
-            Rect rect = new Rect();
-            if (newData.size() == 0) {
-                rect.left = 0;
+            if (i == 0) {
+                newData.get(i).left = 0;
             } else {
-                rect.left = newData.get(newData.size() - 1).right + spacing;
+                newData.get(i).left = newData.get(i - 1).right + spacing;
             }
-            rect.top = (int) (getHeight() - data[i] * AppConstant.LAGER_OFFSET);
-            rect.right = rect.left + width-spacing;
-            rect.bottom = getHeight();
-            newData.add(rect);
-        }
 
+            // 放大倍率
+            float lagerOffsetRate = 3.0f;
+            int height = (int) (h - data[i] * (1.0f + lagerOffsetRate));
+            newData.get(i).top = Math.min(height, h - Utils.dp2px(1));
+            newData.get(i).right = newData.get(i).left + width;
+            newData.get(i).bottom = h;
+        }
+        //横屏时摄像头部分无效区域补偿
+        compensate = (getWidth() - newData.get(newData.size() - 1).right) / 2;
     }
 
     @Override

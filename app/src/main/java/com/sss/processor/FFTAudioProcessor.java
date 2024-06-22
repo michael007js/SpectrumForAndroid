@@ -7,7 +7,7 @@ import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.audio.AudioProcessor;
 import com.google.android.exoplayer2.util.Assertions;
 import com.google.android.exoplayer2.util.Util;
-import com.paramsen.noise.Noise;
+import com.sss.fourier.Fourier;
 import com.sss.spectrum.AppConstant;
 
 import java.nio.ByteBuffer;
@@ -25,7 +25,6 @@ public class FFTAudioProcessor implements AudioProcessor {
     private static final int MAX_CAPACITY = 65536;
     private static final int BUFFER_EXTRA_SIZE = AppConstant.SAMPLE_SIZE * 8;
 
-    private Noise noise;
     private boolean isActive = false;
 
     private ByteBuffer processBuffer;
@@ -85,7 +84,6 @@ public class FFTAudioProcessor implements AudioProcessor {
         }
         this.inputAudioFormat = inputAudioFormat;
         isActive = true;
-        noise = Noise.real(AppConstant.SAMPLE_SIZE);
         audioTrackBufferSize = getDefaultBufferSizeInBytes(inputAudioFormat);
         srcBuffer = ByteBuffer.allocate(audioTrackBufferSize + BUFFER_EXTRA_SIZE);
         return inputAudioFormat;
@@ -141,6 +139,12 @@ public class FFTAudioProcessor implements AudioProcessor {
 
 
     FFT fft = new FFT(AppConstant.SAMPLE_SIZE);
+    Fourier fourier = new Fourier(AppConstant.SAMPLE_SIZE) {
+        @Override
+        protected int getSampleFrequency() {
+            return inputAudioFormat.sampleRate;
+        }
+    };
 
     private void processFFTByDsp(ByteBuffer buffer) {
         // 确保buffer是正确设置为读模式
@@ -156,42 +160,30 @@ public class FFTAudioProcessor implements AudioProcessor {
         }
 
         // 使用TarsosDSP库执行FFT变换
-        fft.forwardTransform(audioFloats);
-        // 在这里处理FFT结果，例如通过listener回调
+//        float[] power = new float[AppConstant.SAMPLE_SIZE / 2];
+//        float[] phase = new float[AppConstant.SAMPLE_SIZE / 2];
+//        fft.powerPhaseFFTBeatRootOnset(audioFloats, power, phase);
+//        if (listener != null) {
+//            listener.onFFTReady(inputAudioFormat.sampleRate, inputAudioFormat.channelCount, phase);
+//        }
+
+//        fft.forwardTransform(audioFloats);
+//        fft.forwardTransform(audioFloats);
+//        if (listener != null) {
+//            listener.onFFTReady(inputAudioFormat.sampleRate, inputAudioFormat.channelCount, audioFloats);
+//        }
+
+//        float[] complexSignal = new float[2 * AppConstant.SAMPLE_SIZE];
+//        for (int i = 0; i < audioFloats.length; i++) {
+//            complexSignal[i] = audioFloats[i];
+//        }
+//        fft.complexForwardTransform(complexSignal);
+//        if (listener != null) {
+//            listener.onFFTReady(inputAudioFormat.sampleRate, inputAudioFormat.channelCount, complexSignal);
+//        }
+        ;
         if (listener != null) {
-            // 注意，具体实现可能需要你根据实际频谱数据调整参数
-            listener.onFFTReady(inputAudioFormat.sampleRate, inputAudioFormat.channelCount, audioFloats);
-        }
-    }
-
-    private void processFFTByNoise(ByteBuffer buffer) {
-        if (listener == null) {
-            return;
-        }
-        srcBuffer.put(buffer.array());
-        srcBufferPosition += buffer.array().length;
-        int bytesToProcess = AppConstant.SAMPLE_SIZE * 2;
-        Byte currentByte = null;
-        while (srcBufferPosition > audioTrackBufferSize) {
-            srcBuffer.position(0);
-            srcBuffer.get(tempByteArray, 0, bytesToProcess);
-
-            for (int index = 0; index < tempByteArray.length; index++) {
-                byte b = tempByteArray[index];
-                if (currentByte == null) {
-                    currentByte = b;
-                } else {
-                    src[index / 2] = (currentByte.floatValue() * Byte.MAX_VALUE + b) / (Byte.MAX_VALUE * Byte.MAX_VALUE);
-                    dst[index / 2] = 0f;
-                    currentByte = null;
-                }
-            }
-            srcBuffer.position(bytesToProcess);
-            srcBuffer.compact();
-            srcBufferPosition -= bytesToProcess;
-            srcBuffer.position(srcBufferPosition);
-            float[] fft = noise.fft(src, dst);
-            listener.onFFTReady(inputAudioFormat.sampleRate, inputAudioFormat.channelCount, fft);
+            listener.onFFTReady(inputAudioFormat.sampleRate, inputAudioFormat.channelCount, fourier.fft(audioFloats).getAllPhase());
         }
     }
 
@@ -254,9 +246,6 @@ public class FFTAudioProcessor implements AudioProcessor {
     }
 
     public void release() {
-        if (noise != null) {
-            noise.close();
-        }
         if (fftExecutor != null) {
             if (!fftExecutor.isTerminated()) {
                 fftExecutor.shutdownNow();
