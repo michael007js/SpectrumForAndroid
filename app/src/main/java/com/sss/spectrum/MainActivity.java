@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.switch_kugou_column).setOnClickListener(this);
         findViewById(R.id.switch_bessel).setOnClickListener(this);
         findViewById(R.id.switch_waveform).setOnClickListener(this);
+        findViewById(R.id.switch_wave_column_form).setOnClickListener(this);
         findViewById(R.id.switch_circle_round).setOnClickListener(this);
         findViewById(R.id.switch_speedometer).setOnClickListener(this);
         findViewById(R.id.switch_rotating_circle).setOnClickListener(this);
@@ -144,6 +145,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.switch_waveform:
                 startActivity(new Intent(this, WaveActivity.class));
+            case R.id.switch_wave_column_form:
+                startActivity(new Intent(this, WaveColumnActivity.class));
                 break;
             case R.id.switch_circle_round:
                 startActivity(new Intent(this, CircleRoundActivity.class));

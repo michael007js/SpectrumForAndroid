@@ -13,6 +13,6 @@ public class AppConstant {
     //音频把柱(max1024)
     public static final int SAMPLE_SIZE = 256;
     //放大量
-    public static final int LAGER_OFFSET = 5;
+    public static final int LAGER_OFFSET = 10;
 
 }

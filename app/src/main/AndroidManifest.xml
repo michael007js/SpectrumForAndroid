@@ -47,6 +47,9 @@
             android:name=".WaveActivity"
             android:screenOrientation="landscape" />
         <activity
+            android:name=".WaveColumnActivity"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".CircleRoundActivity"
             android:screenOrientation="landscape" />
         <activity
