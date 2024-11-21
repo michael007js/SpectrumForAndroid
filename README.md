@@ -4,7 +4,7 @@
 
  **项目介绍**
 
- 这是一个Android平台的音乐频谱合集,把音频能量用canvas画出来，至于频谱数据的获取或者傅里叶转换之类的不在本篇范畴，网上教程一大把，本篇引用的是[数字信号处理包（TarsosDSP-Android）](https://github.com/michael007js/SpectrumForAndroid/tree/master/app/libs)
+ 这是一个Android平台的音乐频谱合集,把音频能量用canvas画出来，至于频谱数据的获取则[用java原生实现了快速傅里叶变换](https://github.com/michael007js/SpectrumForAndroid/tree/master/app/src/main/java/com/sss/fourier)，同时也包含了第三方jar包[数字信号处理包（TarsosDSP-Android）](https://github.com/michael007js/SpectrumForAndroid/tree/master/app/libs)
 
  本项目与市面上大多数同类项目的区别是实现方式更优雅，不需要通过申请录音权限进而使用Visualizer来实现（大清亡了啊喂！还在使用Visualizer），而是通过实现AudioProcessor接口直接对原始音频数据作运算处理，
  
