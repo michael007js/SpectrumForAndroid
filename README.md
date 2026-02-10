@@ -1,6 +1,10 @@
  ** **SpectrumForAndroid** ** 
  
+
+[一个简单且强大的exo3+播放器库](https://github.com/michael007js/SimpleSuperExoPlayer/tree/master)
+
 [一个android平台下的稀有自绘控件集合](https://github.com/michael007js/SimpleViewSet)
+
 
  **项目介绍**
 
